@@ -1,9 +1,8 @@
-package minkyung.boj;
+package _240123;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 public class boj_13300 {

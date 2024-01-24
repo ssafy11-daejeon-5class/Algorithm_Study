@@ -1,4 +1,4 @@
-package minkyung.swea;
+package _240123;
 
 import java.io.BufferedReader;
 import java.io.IOException;
