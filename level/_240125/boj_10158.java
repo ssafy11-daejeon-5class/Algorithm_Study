@@ -17,18 +17,20 @@ public class boj_10158 {
 
         t = Integer.parseInt(bufferedReader.readLine());
         
-        if((p+t) / W % 2 == 0){
-            p = (p + t) % W;
-        } else if(((p+t) / W) % 2 == 1){
-            p = W - (p + t) % W;
-        }
+        // if((p+t) / W % 2 == 0){
+        //     p = (p + t) % W;
+        // } else if(((p+t) / W) % 2 == 1){
+        //     p = W - (p + t) % W;
+        // }
 
-        if(((q+t) / H) % 2 == 0){
-            q = (q + t) % H; 
-        } else if(((q+t)/ H) % 2 == 1){
-            q = H - (q+t) % H;
-        }
+        // if(((q+t) / H) % 2 == 0){
+        //     q = (q + t) % H; 
+        // } else if(((q+t)/ H) % 2 == 1){
+        //     q = H - (q+t) % H;
+        // }
 
+        p = W - Math.abs(W- (p+t) %(2*W));
+        q = H - Math.abs(H - (q+t)%(2*H));
         System.out.print(p + " " + q);
     }
 }
