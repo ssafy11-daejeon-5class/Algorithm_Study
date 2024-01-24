@@ -27,6 +27,7 @@ public class swea_1860 {
             for(int i = 0 ; i < N ; i++){
                 if((customers[i] / M) * K < i + 1){
                     answer = "Impossible";
+                    break;
                 }
             }
             System.out.println("#" + test +" " + answer);
