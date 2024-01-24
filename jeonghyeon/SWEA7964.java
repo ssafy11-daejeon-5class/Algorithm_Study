@@ -1,5 +1,3 @@
-package algorithm.ssafy.SWEA;
-
 import java.util.Scanner;
 
 public class SWEA7964 {
