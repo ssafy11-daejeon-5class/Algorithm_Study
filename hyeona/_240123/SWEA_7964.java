@@ -1,4 +1,4 @@
-package algorithm.Algorithm_Study.hyeona;
+package algorithm.Algorithm_Study.hyeona._240123;
 
 import java.util.Scanner;
 
