@@ -1,6 +1,9 @@
 package study._240125.sungmin;
 
-class Solution
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Solution
 {
 	public static void main(String args[]) throws Exception
 	{

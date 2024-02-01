@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
->>>>>>> 0eb0301e31e18691f0996ca35dc85755ec606d33
 
 public class hdst_6282 {
 	static int n, cnt;

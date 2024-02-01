@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class SWEA_1493 {
     public static void main(String[] args) throws FileNotFoundException {
 
-        System.setIn(new FileInputStream("/Users/hyeonacha/Desktop/ssafy_work/src/algorithm/Algorithm_Study/hyeona/input.txt"));
+//        System.setIn(new FileInputStream("/Users/hyeonacha/Desktop/ssafy_work/src/algorithm/Algorithm_Study/hyeona/input.txt"));
         Scanner sc = new Scanner(System.in);
         int T = sc.nextInt();
         for(int i=0; i<T; i++)
