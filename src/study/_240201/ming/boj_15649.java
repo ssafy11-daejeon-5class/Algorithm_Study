@@ -9,7 +9,7 @@ public class boj_15649 {
 	// N과 M (1) - 수열
 	static int n, m;
 	static int[] selected;
-	static boolean[] visited;
+	static boolean[] visited;  
 	static StringBuilder sb = new StringBuilder();
 	
 	public static void main(String[] args) throws IOException {
