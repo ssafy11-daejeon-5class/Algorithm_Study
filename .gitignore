@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=java
 
 out/
+bin/
 
 ### Java ###
 # Compiled class file
