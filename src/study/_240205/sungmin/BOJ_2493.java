@@ -1,4 +1,4 @@
-package hw._240202.kwonja;
+package study._240205.sungmin;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,5 +32,27 @@ public class BOJ_2493 {
 			}
 		}
 		
+	}
+}
+class Pair{
+	private int x;
+	private int y;
+	
+	public int getX() {
+		return x;
+	}
+	public Pair(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
 	}
 }
