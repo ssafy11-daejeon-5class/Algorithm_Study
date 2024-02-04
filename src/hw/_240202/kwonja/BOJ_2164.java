@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/*
+ * 카드 2
+ */
 public class BOJ_2164 {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
