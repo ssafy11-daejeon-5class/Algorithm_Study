@@ -16,12 +16,11 @@ public class BOJ2164 {
 		}
 		int idx;
 		for(idx = 0; ; idx++) {
-			System.out.println(cards.get(idx) + 1);
 			if(idx % 2 == 1) {
 				cards.add(cards.get(idx));
 			}
 			if(cards.size() == idx + 1) {
-				System.out.println(cards.get(idx) + 1 + " this");
+				System.out.println(cards.get(idx) + 1);
 				return;
 			}
 		}
