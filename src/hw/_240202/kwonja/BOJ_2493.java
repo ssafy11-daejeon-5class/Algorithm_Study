@@ -3,45 +3,37 @@ package hw._240202.kwonja;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Queue;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
-public class BOJ16234 {
+public class BOJ_2493 {
 	static int n;
-	static Queue<Pair> q;
-	static int[][] board;
-	static int[][] dist;
-	static int[] dx=new int[] {1,-1,0,0};
-	static int[] dy=new int[] {0,0,1,-1};
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		StringTokenizer st= new StringTokenizer(br.readLine());
-		
-		n= Integer.parseInt(st.nextToken());
-		int l= Integer.parseInt(st.nextToken());
-		int r= Integer.parseInt(st.nextToken());
-		
-		board=new int[n][n];
-		dist=new int[n][n];
-		for(int i=0;i<n;i++)
+		n= Integer.parseInt(br.readLine());
+		StringTokenizer st =new StringTokenizer(br.readLine());
+		Stack<Pair> stack = new Stack<>();
+		for(int i=1;i<=n;i++)
 		{
-			st= new StringTokenizer(br.readLine());
-			for(int j=0;j<n;j++)
+			int n= Integer.parseInt(st.nextToken());
+			while(!stack.isEmpty() && n>stack.peek().getX())
 			{
-				board[i][j]=Integer.parseInt(st.nextToken());
+				stack.pop();
+			}
+			if(stack.isEmpty())
+			{
+				System.out.print("0 ");
+				stack.push(new Pair(n,i));
+			}
+			else if(!stack.isEmpty())
+			{
+				System.out.print(stack.peek().getY()+" ");
+				stack.push(new Pair(n,i));
 			}
 		}
 		
-		//입력받기
-		
 	}
-
 }
-
-
-
 class Pair{
 	private int x;
 	private int y;
