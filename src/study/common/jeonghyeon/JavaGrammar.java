@@ -1,7 +1,12 @@
 package study.common.jeonghyeon;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 public class JavaGrammar {
 
@@ -177,6 +182,14 @@ public class JavaGrammar {
 		int[] tmp = list.stream().mapToInt(i->i).toArray(); 
 		
 		
+		// String 배열/리스트 -> Int 변환
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		//System.out.println(Arrays.asList(st.toString().split(" ")).get(1));
+		List<Integer> arr = Arrays.asList(br.readLine().split(" ")).stream().map(Integer::parseInt).collect(Collectors.toList());
+		int[] nums = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 		
 		
 		
