@@ -30,7 +30,7 @@ public class AE1_3 {
 			answer.add(smallestNum);
 			for (int j = 0; j < S.size() - 1; j++) {
 				for (int k = j + 1; k < S.size(); k++) {
-					System.out.println("s : " + S);
+					// System.out.println("s : " + S);
 					if (S.get(k) > 0 && S.get(j) + smallestNum == S.get(k)) {
 						S.set(k, -1);
 						newS.add(S.get(j));
