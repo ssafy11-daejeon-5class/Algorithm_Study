@@ -20,6 +20,7 @@ public class SWEA_1228 {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
 //		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("input.txt")));
 		for(int t = 1 ; t <= 10 ; t++) {
 			N = Integer.parseInt(br.readLine());
@@ -44,7 +45,6 @@ public class SWEA_1228 {
 				for(int j = 0 ; j < y ; j++) {
 					nums[j] = Integer.parseInt(st.nextToken());
 				}
-				
 				insert();
 				N += y;
 			}
