@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 public class BOJ16234 {
 	static int n;
 	static Queue<Pair> q;
+	static Queue<Pair> q1=new LinkedList<>();
 	static int[][] board;
 	static int[][] visited;
 	static int l;
@@ -62,16 +63,9 @@ public class BOJ16234 {
 						sum=0; 
 						q=new LinkedList<Pair>();
 						bfs(i,j,++seq);
-						for(int k=0;k<n;k++)
-						{
-							for(int g=0;g<n;g++)
-							{
-								if(visited[k][g]==seq) //방문한 왕국
-								{
-									board[k][g]=sum/place; //인구수 나누기
-								}
-							}
-						}
+						
+						//인구수 나누기
+						divide();
 						
 					}
 				}
@@ -82,9 +76,18 @@ public class BOJ16234 {
 		
 		
 	}
+	public static void divide()
+	{
+		while(!q1.isEmpty())
+		{
+			board[q1.peek().getX()][q1.peek().getY()]=sum/place;
+			q1.poll();
+		}
+	}
 	public static void bfs(int x,int y,int time)
 	{
 		q.offer(new Pair(x,y));
+		q1.offer(new Pair(x,y));
 		visited[x][y]=1;
 		sum += board[x][y];
 		place=1;
@@ -105,6 +108,7 @@ public class BOJ16234 {
 				{
 					
 					q.offer(new Pair(nx,ny));
+					q1.offer(new Pair(nx,ny));
 					visited[nx][ny]=time;
 					place++;
 					sum += board[nx][ny];
