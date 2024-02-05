@@ -9,39 +9,33 @@ public class SWEA_1218 {
 
 	static int N, flag;
 	static String str;
-	static Stack<String> s;
+	static Stack<Character> s;
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		for(int t = 1; t < 2 ; t++) {
+		for(int t = 1; t <= 10 ; t++) {
 			flag = 0;
 			s = new Stack<>();
 			N = Integer.parseInt(br.readLine());
 			str = br.readLine();
 			
 			for(int i = 0 ; i < str.length() ; i++) {
-				if(str.charAt(i) == '<') s.push("<");
-				if(str.charAt(i) == '{') s.push("{");
-				if(str.charAt(i) == '(') s.push("(");
+				if(str.charAt(i) == ')' && s.peek() == '(') {
+					s.pop();
+				} else if (str.charAt(i) == '}' && s.peek() == '{') s.pop();
+				else if (str.charAt(i) == '>' && s.peek() == '<') s.pop();
+				else if (str.charAt(i) == ']' && s.peek() == '[') s.pop();
 				else {
-					if(s.isEmpty()) {
-						flag = 1;
-						break;
-					} else {
-						if(str.charAt(i) == ']' && s.peek() == "[") s.pop();
-						if(str.charAt(i) == '}' && s.peek() == "{") s.pop();
-						if(str.charAt(i) == ')' && s.peek() == "(") {
-							System.out.println(s.pop());		
-						}
-					}
-				}	
+					s.push(str.charAt(i));
+				}
 			}
-			if(!s.isEmpty()) {
-				System.out.println(s);
-				flag = 1;
+			
+			if(s.isEmpty()) {
+				System.out.println("#" + t + " 1");
+			} else {
+				System.out.println("#" + t + " 0");
 			}
-			System.out.println("#" + t + " " + flag);
 		}
 	}
 
