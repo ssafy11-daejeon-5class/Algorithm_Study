@@ -1,4 +1,4 @@
-package algorithm.Algorithm_Study.src.study.common;
+package algorithm.Algorithm_Study.src.study.common.jeonghyeon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
