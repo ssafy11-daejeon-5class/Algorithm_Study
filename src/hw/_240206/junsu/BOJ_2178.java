@@ -49,28 +49,44 @@ public class BOJ_2178 {
 		}
 		answer = Integer.MAX_VALUE;
 //		bfs();
-		dfs();
+		v[0][0]= true;
+		dfs(0, 0, 1);
 		System.out.println(answer);
 	}
 
-	private static void dfs() {
-		Stack<Node> s = new Stack<>();
-		s.push(new Node(0, 0, 1));
-		v[0][0] = true;
-		while (!s.isEmpty()) {
-			Node current = s.pop();
-			if (current.i == N - 1 && current.j == M - 1) {
-				answer = Math.min(answer, current.cnt);
-			}
-			for (int k = 0; k < 4; k++) {
-				int ni = current.i + di[k];
-				int nj = current.j + dj[k];
-				if (ni >= 0 && ni < N && nj >= 0 && nj < M && !v[ni][nj] && maps[ni][nj] == 1) {
-					s.push(new Node(ni, nj, current.cnt + 1));
-					v[ni][nj] = true;
-				}
+	private static void dfs(int i, int j, int cnt) {
+//		Stack<Node> s = new Stack<>();
+//		s.push(new Node(0, 0, 1));
+//		v[0][0] = true;
+//		while (!s.isEmpty()) {
+//			Node current = s.pop();
+//			if (current.i == N - 1 && current.j == M - 1) {
+//				answer = Math.min(answer, current.cnt);
+//			}
+//			for (int k = 0; k < 4; k++) {
+//				int ni = current.i + di[k];
+//				int nj = current.j + dj[k];
+//				if (ni >= 0 && ni < N && nj >= 0 && nj < M && !v[ni][nj] && maps[ni][nj] == 1) {
+//					s.push(new Node(ni, nj, current.cnt + 1));
+//					v[ni][nj] = true;
+//				}
+//			}
+//		}
+		if (i == N - 1 && j == M - 1) {
+			answer = Math.min(answer, cnt);
+			return;
+		}
+		
+		for(int k = 0 ; k < 4; k++) {
+			int ni = i + di[k];
+			int nj = j + dj[k];
+			if(ni >= 0 && ni < N && nj >= 0 && nj < M && !v[ni][nj] && maps[ni][nj] == 1) {
+				v[ni][nj] = true;
+				dfs(ni, nj, cnt + 1);
+				v[ni][nj] = false;
 			}
 		}
+		
 	}
 
 	private static void bfs() {
