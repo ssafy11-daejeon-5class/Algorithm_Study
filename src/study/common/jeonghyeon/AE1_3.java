@@ -1,4 +1,4 @@
-package study.common.jeonghyeon;
+package algorithm.Algorithm_Study.src.study.common.jeonghyeon;
 
 import java.io.BufferedReader;
 import java.io.IOException;

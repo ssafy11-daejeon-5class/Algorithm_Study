@@ -1,4 +1,4 @@
-package study._240207.jeonghyeon;
+package hw._240206.jeonghyeon;
 
 import java.io.BufferedReader;
 import java.io.IOException;
