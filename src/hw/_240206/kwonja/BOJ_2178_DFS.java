@@ -17,6 +17,7 @@ public class BOJ_2178_DFS {
 	static int[][] board;
 	static int[] dx = new int[] {1,-1,0,0};
 	static int[] dy = new int[] {0,0,1,-1};
+	static int[][] dist;
 	static int res=Integer.MAX_VALUE;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,6 +26,7 @@ public class BOJ_2178_DFS {
 		n=Integer.parseInt(st.nextToken());
 		m=Integer.parseInt(st.nextToken());
 		board=new int[n][m];
+		dist=new int[n][m];
 		for(int i=0;i<n;i++)
 		{
 			st=new StringTokenizer(br.readLine());
@@ -34,17 +36,14 @@ public class BOJ_2178_DFS {
 				board[i][j]=str.charAt(j)-'0';
 			}
 		}
-		dfs(0,0,1,new int[n][m]);
+		dfs(0,0,1);
 		System.out.print(res);
 		
 	}
-	public static void dfs(int curx, int cury,int disvalue,int[][] dist) {
+	public static void dfs(int curx, int cury,int disvalue) {
 		
-		dist[curx][cury]=disvalue;
-		System.out.println(curx +" "+ cury + dist.toString());
 		if(curx==n-1 && cury == m-1)
 		{
-			System.out.println("도착 : "+disvalue);
 			res=Math.min(res, disvalue);
 			return;
 		}
@@ -54,7 +53,9 @@ public class BOJ_2178_DFS {
 			int ny= cury+dy[i];
 			if(nx<0 || nx>=n || ny<0 || ny>=m)continue;
 			if(board[nx][ny]==0 || dist[nx][ny]>0)continue;
-			dfs(nx,ny,disvalue+1,dist.clone());				
+			dist[nx][ny]=disvalue;
+			dfs(nx,ny,disvalue+1);
+			dist[nx][ny]=0;
 		}
 	}
 
