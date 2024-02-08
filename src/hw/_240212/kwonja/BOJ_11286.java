@@ -1,4 +1,4 @@
-package hw._240207.kwonja;
+package hw._240212.kwonja;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 public class BOJ_11286 {
 
 	/*
-	 * 
+	 * 절대값 힙
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		PriorityQueue<Integer> pq = new PriorityQueue<>(
