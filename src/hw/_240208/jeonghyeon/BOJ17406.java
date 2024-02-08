@@ -63,18 +63,18 @@ public class BOJ17406 {
 		int oneRoundDist = ((largeR - smallR) + (largeC - smallC)) * 2;
 		int leftDist = R % oneRoundDist;
 		for (int i = 0; i < leftDist; i++) {
-			for (int r = largeR; r > smallR; r--) {
-				map[r - 1][smallC] = map[r][smallC];
-			}
 			String[] upString = map[smallR].clone();
-			for (int c = largeC; c > smallC; c--) {
-				map[largeR][c - 1] = map[largeR][c];
-			}
 			for (int r = smallR; r < largeR; r++) {
-				map[r + 1][largeC] = map[r][largeC];
+				map[r][smallC] = map[r + 1][smallC];
 			}
 			for (int c = smallC; c < largeC; c++) {
-				map[smallR][c + 1] = upString[c];
+				map[largeR][c] = map[largeR][c + 1];
+			}
+			for (int r = largeR; r > smallR; r--) {
+				map[r][largeC] = map[r - 1][largeC];
+			}
+			for (int c = largeC; c < smallC; c--) {
+				map[smallR][c] = upString[c - 1];
 			}
 		}
 	}
