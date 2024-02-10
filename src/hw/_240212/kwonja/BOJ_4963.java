@@ -42,7 +42,7 @@ public class BOJ_4963 {
 			{
 				for(int j=0;j<w;j++)
 				{
-					if(board[i][j]==1)bfs(i,j);
+					if(board[i][j]==1 && visited[i][j]==0)bfs(i,j);
 				}
 			}
 			System.out.println(res);	
