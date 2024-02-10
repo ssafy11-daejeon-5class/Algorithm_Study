@@ -21,41 +21,32 @@ public class BOJ_2477 {
 		}
 	}
 
-	static int K;
+	static int K, maxR, indexR, maxC, indexC;
 	static int[][] values;
 	static StringTokenizer st;
-	static List<List<Integer>> sides;
+	static int[] input;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		K = Integer.parseInt(br.readLine());
-		
-		sides = new ArrayList<>();
-
-		for(int i = 0 ; i < 4; i++){
-			sides.add(new ArrayList<>());
-		}
+		input = new int[6];
 		
 		for (int i = 0; i < 6; i++) {
 			st = new StringTokenizer(br.readLine());
 			int dir = Integer.parseInt(st.nextToken());
-			int length = Integer.parseInt(st.nextToken());
-			sides.get(dir-1).add(length);
-		}
-		int i = 0;
-		values = new int[2][2];
-		for (List list : sides) {
-			if(list.size() == 2){
-				values[i][0] = (int) list.get(0);
-				values[i][1] = (int) list.get(1);
-				i++;
+			int distance = Integer.parseInt(st.nextToken());
+			if(dir==3 || dir==4) {// r
+				maxR=maxR<distance?distance:maxR;
+				if (maxR==distance) indexR=i;
+			}else { // c
+				maxC=maxC<distance?distance:maxC;
+				if (maxC==distance) indexC=i;
 			}
+			input[i] = distance;
 		}
-		Arrays.sort(values[0]);
-		Arrays.sort(values[1]);
 
-		System.out.println(values[0][1] * values[1][1] - values[0][0]*values[1][0]);
+		System.out.println();
 	}
 
 }
