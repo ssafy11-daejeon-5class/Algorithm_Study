@@ -33,7 +33,7 @@ public class SWEA_7699 {    // 수지의 수지 맞는 여행
             R = Integer.parseInt(st.nextToken());
             C = Integer.parseInt(st.nextToken());
             randmark = new String[R];
-            answer = 0;
+            answer = 1;
             v_Randmark = "";
             v = new boolean[R][C];
 

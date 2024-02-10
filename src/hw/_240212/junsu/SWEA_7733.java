@@ -36,8 +36,8 @@ public class SWEA_7733 {    // 치즈 도둑
                     M = Math.max(M, maps[i][j]);
                 }
             }            
-            answer = Integer.MIN_VALUE;
-            for(int d = 1 ; d <= M ; d++){
+            answer = 1;
+            for(int d = 1 ; d < M ; d++){
                 v = new boolean[N][N];
                 count = 0;
                 for(int i = 0 ; i < N ; i++){
