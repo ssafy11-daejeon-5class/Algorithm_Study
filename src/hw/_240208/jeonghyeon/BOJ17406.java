@@ -3,13 +3,18 @@ package hw._240208.jeonghyeon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class BOJ17406 {
 	static int N;
 	static int M;
 	static int K;
-	static String[][] map;
+	static String[][] mapOriginal;
+	static int[][] operation;
+	static int[] sel;
+	static boolean[] v;
+	static int answer = Integer.MAX_VALUE;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,64 +23,114 @@ public class BOJ17406 {
 		M = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 
-		map = new String[N][M];
+		mapOriginal = new String[N][M];
 		for (int i = 0; i < N; i++) {
-			map[i] = br.readLine().split(" ");
+			mapOriginal[i] = br.readLine().split(" ");
 		}
-
+		operation = new int[K][3];
 		for (int k = 0; k < K; k++) {
 			st = new StringTokenizer(br.readLine());
-			int R = Integer.parseInt(st.nextToken()) - 1;
-			int C = Integer.parseInt(st.nextToken()) - 1;
-			int S = Integer.parseInt(st.nextToken());
-			for (int i = S; i > 0; i--) {
-				turning(R, C, S);
-			}
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("\n");
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < M; j++) {
-					sb.append(map[i][j]);
-					sb.append(" ");
-				}
-				sb.append("\n");
-			}
-			System.out.println(sb);
+			operation[k][0] = Integer.parseInt(st.nextToken()) - 1;
+			operation[k][1] = Integer.parseInt(st.nextToken()) - 1;
+			operation[k][2] = Integer.parseInt(st.nextToken());
 		}
-
-		int answer = Integer.MAX_VALUE;
-		for (int i = 0; i < N; i++) {
-			int val = 0;
-			for (int j = 0; j < M; j++) {
-				val += Integer.parseInt(map[i][j]);
-			}
-			answer = Math.min(answer, val);
-		}
+		sel = new int[K];
+		v = new boolean[K];
+		
+			
+		recursive(0);
 		System.out.println(answer);
 	}
 
-	static void turning(int R, int C, int S) {
+private static void recursive(int k) {
+	// basis part
+	// 다 골랐어요
+	if(k==sel.length) {
+		turnOneRound(sel);
+		return;
+	}
+	
+	// inductive part
+	for(int i=0;i<K;i++){
+		if(v[i]==false) {
+			v[i] = true;
+			sel[k]=i;
+			recursive(k+1);
+			v[i] = false;
+		}
+	}
+}
+
+static void turnOneRound(int[] sel) {
+	String[][] map = Arrays.copyOf(mapOriginal, mapOriginal.length);
+	
+	for(int j = 0; j < sel.length; j++) {
+		System.out.print(sel[j]);
+	}
+	System.out.println();
+	System.out.println();
+	
+	for(int j = 0; j < sel.length; j++) {
+		int R = operation[sel[j]][0];
+		int C = operation[sel[j]][1];
+		int S = operation[sel[j]][2];
+		for (int s = S; s > 0; s--)                    
+			turnOneLine(map, R, C, s);
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n");
+		for (int i = 0; i < N; i++) {
+			for (int j1 = 0; j1 < M; j1++) {
+				sb.append(map[i][j1]);
+				sb.append(" ");
+			}
+			sb.append("\n");
+		}
+		System.out.println(sb);	
+		
+	}
+	
+	
+
+	for (int i = 0; i < N; i++) {
+		int val = 0;
+		for (int j = 0; j < M; j++) {
+			val += Integer.parseInt(map[i][j]);
+		}
+		System.out.println(val + " val");
+		answer = Math.min(answer, val);
+	}
+}
+
+	static void turnOneLine(String[][] map, int R, int C, int S) {
 		int smallR = R - S;
 		int largeR = R + S;
 		int smallC = C - S;
 		int largeC = C + S;
-		int oneRoundDist = ((largeR - smallR) + (largeC - smallC)) * 2;
-		int leftDist = R % oneRoundDist;
-		for (int i = 0; i < leftDist; i++) {
-			String[] upString = map[smallR].clone();
-			for (int r = smallR; r < largeR; r++) {
-				map[r][smallC] = map[r + 1][smallC];
-			}
-			for (int c = smallC; c < largeC; c++) {
-				map[largeR][c] = map[largeR][c + 1];
-			}
-			for (int r = largeR; r > smallR; r--) {
-				map[r][largeC] = map[r - 1][largeC];
-			}
-			for (int c = largeC; c < smallC; c--) {
-				map[smallR][c] = upString[c - 1];
-			}
+		String[] upString = map[smallR].clone();
+		for (int r = smallR; r < largeR; r++) {
+			map[r][smallC] = map[r + 1][smallC];
 		}
+		for (int c = smallC; c < largeC; c++) {
+			map[largeR][c] = map[largeR][c + 1];
+		}
+		for (int r = largeR; r > smallR; r--) {
+			map[r][largeC] = map[r - 1][largeC];
+		}
+		for (int c = largeC; c > smallC; c--) {
+			map[smallR][c] = upString[c - 1];
+		}
+		
 	}
 }
+
+//StringBuilder sb = new StringBuilder();
+//sb.append("\n");
+//for (int i = 0; i < N; i++) {
+//	for (int j = 0; j < M; j++) {
+//		sb.append(map[i][j]);
+//		sb.append(" ");
+//	}
+//	sb.append("\n");
+//}
+//System.out.println(sb);
