@@ -28,6 +28,7 @@ public class BOJ_2146 {
 	board= new int[n][n];
 	visitied = new int[n][n];
 	seevisitied = new int[n][n];
+	
 	for(int i=0;i<n;i++)
 	{
 		st = new StringTokenizer(br.readLine());
@@ -78,11 +79,13 @@ public class BOJ_2146 {
 				if(nx<0 || nx>=n || ny<0 || ny>=n)continue;
 				if(visitied[nx][ny]>0)continue;
 				//바다라면
-				if(board[nx][ny]==0)
+				if(board[nx][ny]==0 && seevisitied[curx][cury]==0) //가장자리를 방문하지 않았다면 //중복체크로 20ms 단축 N이 크지 않아서 큰 차이를 보이지는 않는듯
 				{
 					//가장자리 탐색
 					seeq.offer(new Pair(curx,cury));
 					seevisitied[curx][cury]=1;
+					//가장자리가 여러개일경우 중복값으로 들어오게되는데 어떻게 해결할 것인가
+					//
 				}
 				if(board[nx][ny]==0)continue;
 				q.offer(new Pair(nx,ny));
