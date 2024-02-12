@@ -28,21 +28,15 @@ public class BOJ_17406 {
 			}
 		}
 		
-		for(int i=0; i<K; i++)
-		{
+		for(int i=0; i<K; i++) {
 			st = new StringTokenizer(br.readLine());
 			R = Integer.parseInt(st.nextToken());
 			C = Integer.parseInt(st.nextToken());
 			S = Integer.parseInt(st.nextToken());
-			
-			rotate(R, C, S);
-			
-		}
-		
-		
-		
-		
 
+			rotate(R, C, S);
+
+		}
 	}
 	
 	private static void rotate(int r, int c, int s) {
