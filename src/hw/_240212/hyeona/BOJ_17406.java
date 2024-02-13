@@ -1,4 +1,4 @@
-package algorithm.Algorithm_Study.src.hw._240212.hyeona;
+package hw._240212.hyeona;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,11 +23,11 @@ class Number{
 public class BOJ_17406 {
 
 	static int N, M, K, R, C, S, min;
-	static int[][] arr, new_arr;
+	static int[][] arr;
 	static List<Number> list;
 
 	static boolean[] visited;
-	static int[] sel;
+	//static int[] sel;
 	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	public static void main(String[] args) throws IOException {
 		StringTokenizer st;
@@ -37,7 +37,7 @@ public class BOJ_17406 {
 		K = Integer.parseInt(st.nextToken());
 
 		visited = new boolean[K];
-		sel = new int[K];
+		//sel = new int[K];
 
 		list = new ArrayList<>();
 
@@ -64,13 +64,14 @@ public class BOJ_17406 {
 			//rotate(R, C, S);
 		}
 
-		permutation(0);
+		permutation(0, new int[K]);
 
 		System.out.println(min);
 		//System.out.println(Arrays.deepToString(arr));
+		//System.out.println(Arrays.deepToString(new_arr));
 	}
 
-	private static void check_min() {
+	private static void check_min(int[][] new_arr) {
 
 		//System.out.println(Arrays.deepToString(new_arr));
 		for(int i=0; i<new_arr.length; i++)
@@ -86,12 +87,12 @@ public class BOJ_17406 {
 	}
 
 
-	private static void permutation(int index) {
+	private static void permutation(int index, int[] sel) {
 
 		if(index == sel.length)
 		{
 			//System.out.println(Arrays.toString(sel));
-			new_arr = new int[N][M];
+			int[][] new_arr = new int[N][M];
 
 			for(int i=0; i<arr.length; i++)
 			{
@@ -104,11 +105,14 @@ public class BOJ_17406 {
 				int c = list.get(sel[i]).C;
 				int s = list.get(sel[i]).S;
 
-				System.out.println(r+" "+c+" "+s);
+				//System.out.println(r+" "+c+" "+s);
+				//System.out.println();
 
-				rotate(r, c, s);
+				rotate(r, c, s, new_arr);
 			}
-			check_min();
+			//System.out.println(Arrays.deepToString(new_arr));
+			//System.out.println();
+			check_min(new_arr);
 			//System.out.println("ddddd");
 
 			return;
@@ -120,7 +124,7 @@ public class BOJ_17406 {
 			{
 				sel[index] = i;
 				visited[i]=true;
-				permutation(index+1);
+				permutation(index+1, sel);
 				visited[i]=false;
 			}
 		}
@@ -128,9 +132,8 @@ public class BOJ_17406 {
 
 	}
 
-	private static void rotate(int r, int c, int s) {
-		if(s==0) return;
-
+	private static void rotate(int r, int c, int s, int[][] new_arr) {
+		
 		//System.out.println(Arrays.deepToString(new_arr));
 		//System.out.println("DDDDD");
 
@@ -138,7 +141,6 @@ public class BOJ_17406 {
 		// 돌려야할 배열의 길이 (s*2+1)
 		// 시작점 : r-2, c-2
 
-		int count = (s*2+1) /2;
 		//System.out.println(count);
 
 		// 2,3 => 0,1
@@ -147,36 +149,39 @@ public class BOJ_17406 {
 		int y = c-s-1;
 		//System.out.println(x+" "+y);
 		// 인덱스는 x ~ x + (s*2)
+		
+		int ex = x+(s*2);
+		int ey = y+(s*2);
 
 
-		for(int i=0; i<count; i++)
+		for(int i=0; i<s; i++)
 		{
-			int temp = new_arr[x+i][y + (s*2)-i];
+			int temp = new_arr[x+i][ey-i];
 
 			// 1 ->
-			for(int j=y+(s*2)-i; j>y; j--) {
+			for(int j=ey-i; j>y; j--) {
 				new_arr[x+i][j] = new_arr[x+i][j - 1];
 			}
 
 			// 2 위
-			for(int j=x+i; j<x+(s*2)-i; j++)
+			for(int j=x+i; j<ex-i; j++)
 			{
 				new_arr[j][y+i] = new_arr[j+1][y+i];
 			}
 
 			// <-
-			for(int j=y+i; j<y+(s*2)-i; j++)
+			for(int j=y+i; j<ey-i; j++)
 			{
-				new_arr[x + (s*2)-i][j] = new_arr[x + (s*2)-i][j+1];
+				new_arr[ex-i][j] = new_arr[ex-i][j+1];
 			}
 
 			// 아래
-			for(int j=x+(s*2)-i; j>=r-1; j--)
+			for(int j=ex-i; j>=r-1; j--)
 			{
-				new_arr[j][y+(s*2)-i] = new_arr[j-1][y+(s*2)-i];
+				new_arr[j][ey-i] = new_arr[j-1][ey-i];
 			}
 
-			new_arr[x+i+1][y+(s*2)-i] = temp;
+			new_arr[x+i+1][ey-i] = temp;
 
 //			System.out.println(Arrays.deepToString(new_arr));
 //			System.out.println();
@@ -184,8 +189,8 @@ public class BOJ_17406 {
 
 		}
 
-		//System.out.println(Arrays.deepToString(new_arr));
-		//System.out.println();
+//		System.out.println(Arrays.deepToString(new_arr));
+//		System.out.println();
 
 
 
