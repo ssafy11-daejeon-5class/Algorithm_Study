@@ -10,6 +10,10 @@ public class SWEA_7699 {
  * 수지의 수지 맞는 여행
  * 왜 DFS로 풀어야하는가?
  * DFS BFS를 사용해야할때가 갑자기 헷갈린다
+ * 
+ * 
+ * 초기에 k로 ++를 해줬는데 돌아왔을경우 초기화가 되지 않았다
+ * 방문한 상태를 유지하기위해 배열로 관리함-> 변수로 관리하면 초기화를 인자로 해줘야함
  */
 	
 	static int r,c;
@@ -19,7 +23,6 @@ public class SWEA_7699 {
 	static int[] dx= {0,1,-1,0};
 	static int[] dy= {1,0,0,-1};
 	static int res = Integer.MIN_VALUE;
-	static int k;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -35,7 +38,6 @@ public class SWEA_7699 {
 			visited =new int[r][c];
 			alpha= new int[26];
 			res = Integer.MIN_VALUE;
-			k=0;
 			for(int i=0;i<r;i++)
 			{
 				st= new StringTokenizer(br.readLine());
@@ -47,13 +49,12 @@ public class SWEA_7699 {
 			}
 			visited[0][0]=1;
 			alpha[board[0][0]-'A']++;
-			k++;
 			dfs(0,0);
 			System.out.println("#" + test_case + " "+res);
 		}
 	}
 	private static void dfs(int curx, int cury) {
-		res=Math.max(res, k);
+		res=Math.max(res, visited[curx][cury]);
 		for(int i=0;i<4;i++)
 		{
 			int nx = curx+dx[i];
@@ -62,9 +63,9 @@ public class SWEA_7699 {
 			if(alpha[board[nx][ny]-'A'] > 0 || visited[nx][ny]==1)continue;
 			//여행
 			alpha[board[nx][ny]-'A']++;
-			visited[nx][ny]=1;
-			k++;
+			visited[nx][ny]=visited[curx][cury]+1;
 			dfs(nx,ny);
+			alpha[board[nx][ny]-'A']--;
 			visited[nx][ny]=0;
 		}
 	}
