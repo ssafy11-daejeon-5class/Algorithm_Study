@@ -1,4 +1,4 @@
-package algorithm.Algorithm_Study.src.hw._240212.hyeona;
+package hw._240212.hyeona;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,6 +68,7 @@ public class BOJ_17406 {
 
 		System.out.println(min);
 		//System.out.println(Arrays.deepToString(arr));
+		//System.out.println(Arrays.deepToString(new_arr));
 	}
 
 	private static void check_min() {

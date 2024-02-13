@@ -1,4 +1,4 @@
-package algorithm.Algorithm_Study.src.hw._240212.hyeona;
+package hw._240212.hyeona;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +22,7 @@ class Points{
     }
 }
 
-public class BOJ_2146 {
+public class BOJ_2146_timeout {
 
     static int N, cnt, min;
     static int[] dx = {-1,1,0,0};
