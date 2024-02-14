@@ -45,7 +45,7 @@ public class 아기상어 {
         }
 
     }
-    private static void bfs(Point s) {
+    private static void bfs(Point s ) {
         Queue<Point> q = new ArrayDeque<>();
         q.offer(s);
         v = new boolean[N][N];
