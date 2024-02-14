@@ -31,7 +31,11 @@ package study._240215.hyeona;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -61,7 +65,9 @@ public class BOJ_16236 {
     static int[] dy={0,-1,1,0};
     static int[][] arr;
     static boolean[][] visited;
-    static int N, Ans;
+    static int N, Ans, number, shark;
+    static Queue<Cordinate> queue;
+    static List<Cordinate> list;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public static void main(String[] args) throws IOException {
 
@@ -70,6 +76,8 @@ public class BOJ_16236 {
         visited = new boolean[N][N];
         int x=0;
         int y=0;
+        shark=2;
+        list = new ArrayList<>();
 
         StringTokenizer st;
 
@@ -90,7 +98,7 @@ public class BOJ_16236 {
 
         bfs(x,y);
         print();
-        System.out.println(Ans);
+        //System.out.println(Ans);
 //        if(flag==1) System.out.println(time);
 //        else System.out.println(0);
 
@@ -115,9 +123,8 @@ public class BOJ_16236 {
 	private static void bfs(int x, int y) throws IOException {
 
         int time=0;
-        int shark=2;
-        int number=0;
-        Queue<Cordinate> queue = new LinkedList<>();
+        int flag=0;
+        queue = new LinkedList<>();
         queue.offer(new Cordinate(x, y, time, x, y));
         visited[x][y]=true;
 
@@ -135,7 +142,7 @@ public class BOJ_16236 {
             queue.poll();
             //System.out.print("poll"+" "+x+" "+y);
             //System.out.println();
-
+            
             
             for(int i=0; i<4; i++)
             {
@@ -160,46 +167,105 @@ public class BOJ_16236 {
                     // 바로 먹는게 아니라 거리 따져서 걔를 먹어야함!
                     if(arr[nx][ny]!=0 && arr[nx][ny]<shark)
                     {
-                        arr[nx][ny]=9;
-
-                        // 여기서 쓸데없는 값이 바뀐다
-                        arr[local_x][local_y]=0;
-                        number++;
-
-                        if(number==shark)
-                        {
-                            number=0;
-                            shark++;
-                            //System.out.println(shark);
-                        }
-
-
-                        Ans += (time+1);
-                        //System.out.println(time);
-                        //System.out.println();
-
-                        queue.clear();
-                        queue.offer(new Cordinate(nx, ny, 0, nx,ny));
-                        
-                        
-                        //System.out.println("--");
-                        //System.out.print(nx+" "+ny);
-                        //System.out.println();
-                        //System.out.println("--");
-                        
-                        visited = new boolean[N][N];
-                        visited[nx][ny]=true;
-                        
-                        print();
-                        //System.out.print(nx+" "+ny);
-                        System.out.println();
-                        System.out.println(Ans);
-                        break;
-                        
+                    	flag=1;
+                    	list.add(new Cordinate(nx, ny, time, local_x, local_y));
                     }
 
                 }
             }
+            
+            if(flag==1)
+            {
+                // nx, ny를 기준에 맞게 정렬
+                // 가장 위에 있는 물고기, 가장 왼쪽에 있는 물고기
+                // nx 기준 오름차순, ny기준 오름차순 정렬
+            	
+            	print2();
+                Collections.sort(list, new Comparator<Cordinate>()
+                {
+                	@Override
+    				public int compare(Cordinate o1, Cordinate o2) 
+                	{
+    					
+                		return o1.x != o2.x ? o1.x-o2.x : o1.y -o2.y;
+                	}
+                	
+                });
+                
+                
+                eat_fish(list.get(0));
+                flag=0;
+                list = new ArrayList<>();
+                
+            }
+
+            
+            
         }
     }
+
+	private static void print2() {
+		System.out.println("list 시작");
+		for(int i=0; i<list.size(); i++)
+		{
+			System.out.println(list.get(i).x + " "+list.get(i).y); 
+		}
+		System.out.println("list 끝");
+		
+	}
+
+	private static void eat_fish(Cordinate cor) {
+		
+		
+		int nx = cor.x;
+		int ny = cor.y;
+		
+		int local_x = cor.local_x;
+		int local_y = cor.local_y;
+		
+		int time = cor.time;
+		
+        arr[nx][ny]=9;
+
+        // 여기서 쓸데없는 값이 바뀐다
+        arr[local_x][local_y]=0;
+        number++;
+
+        System.out.println("number "+ number);
+
+
+        Ans += (time+1);
+        time = time+1;
+
+
+        queue.clear();
+        queue.offer(new Cordinate(nx, ny, 0, nx,ny));
+        
+        
+        //System.out.println("--");
+        //System.out.print(nx+" "+ny);
+        //System.out.println();
+        //System.out.println("--");
+        
+        visited = new boolean[N][N];
+        visited[nx][ny]=true;
+        
+        System.out.println("shark size " + shark);
+        System.out.println("time "+ Ans);
+        print();
+        
+        //System.out.println();
+        //System.out.print(nx+" "+ny);
+        System.out.println("=========");
+        
+        if(number==shark)
+        {
+            number=0;
+            shark++;
+            //System.out.println(shark);
+        }
+        
+		
+		
+	}
 }
