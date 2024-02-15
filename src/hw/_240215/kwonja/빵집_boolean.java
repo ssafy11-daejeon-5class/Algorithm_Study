@@ -1,4 +1,4 @@
-package hw._240214.kwonja;
+package hw._240215.kwonja;
 
 import java.io.BufferedReader;
 import java.io.IOException;
