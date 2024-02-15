@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 
 public class 아기상어 {
 
-	static int N, answer, count, sec;
+	static int N, answer, count;
 	static StringTokenizer st;
 	static int[][] maps;
 	static int size = 2;
@@ -34,18 +34,16 @@ public class 아기상어 {
 			for (int j = 0; j < N; j++) {
 				maps[i][j] = Integer.parseInt(st.nextToken());
 				if (maps[i][j] == 9) {
+                    maps[i][j] = 0;
 					start = new int[] { i, j };
 				}
 			}
 		}
-		
-		bfs(start);
-		bfs(start);
-		bfs(start);
-		bfs(start);
-//		while(bfs(start)) {
-//			continue;
-//		}
+        System.out.println(Arrays.toString(start));
+		while(bfs(start)) {
+            System.out.println(Arrays.toString(start));
+			continue;
+		}
 		System.out.println(answer);
 	}
 
@@ -77,7 +75,6 @@ public class 아기상어 {
 					}
 					if(maps[ni][nj] < size && maps[ni][nj] != 0) {
 						v[ni][nj]= true;
-						sec = cur[2];
 						cand.add(new int[] {ni, nj, cur[2]});
 					}
 				}
@@ -85,16 +82,15 @@ public class 아기상어 {
 		}
 		if(cand.size() != 0) {
 			cand.sort((a,b)-> a[2] == b[2]? a[0] == b[0]?Integer.compare(a[1], b[1]):Integer.compare(a[0], b[0]):Integer.compare(a[2], b[2]));
-			for (int[] is : cand) {
-				System.out.println(Arrays.toString(is));
-			}
+			// for (int[] is : cand) {
+			// 	System.out.println(Arrays.toString(is));
+			// }
 			count++;
-			answer += sec;
+			answer += Math.abs(cand.get(0)[0] - start[0]) + Math.abs(cand.get(0)[1] - start[1]);
 			if(count == size) {
 				count = 0;
 				size++;
 			}
-			System.out.println(cand.get(0)[0] + " " + cand.get(0)[1]);
 			maps[cand.get(0)[0]][cand.get(0)[1]] = 0;
 			start = new int[] {cand.get(0)[0], cand.get(0)[1]};
 			return true;
