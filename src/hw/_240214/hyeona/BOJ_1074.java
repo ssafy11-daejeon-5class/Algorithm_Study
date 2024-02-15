@@ -52,15 +52,15 @@ public class BOJ_1074 {
 			number += s*s;
 			return;
 		}
-		else
-		{
-			int ns = s/2;
+		
 			
-			dfs(x,y,ns);
-			dfs(x,y+ns,ns);
-			dfs(x+ns,y,ns);
-			dfs(x+ns,y+ns,ns);
-		}
+		int ns = s/2;
+			
+		dfs(x,y,ns);
+		dfs(x,y+ns,ns);
+		dfs(x+ns,y,ns);
+		dfs(x+ns,y+ns,ns);
+		
 	}
 
 }

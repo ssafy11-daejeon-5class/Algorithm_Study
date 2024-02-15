@@ -3,16 +3,15 @@ package hw._240214.junsu;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Stack;
 import java.util.StringTokenizer;
 
-public class 빵집 {
+public class 빵집_void {
 
 	static int R, C, answer;
 	static int[][] maps;
 	static StringTokenizer st;
 	static int[] dr = { -1, 0, 1 };
+	static boolean flag;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -34,24 +33,27 @@ public class 빵집 {
 			}
 		}
 		for (int i = 0; i < R; i++) {
+			flag = false;
 			dfs(i, 0);
 		}
 		System.out.println(answer);
 	}
 	
-	private static boolean dfs(int r, int c) {
+	private static void dfs(int r, int c) {
 		if (c == C - 1) {
 			answer++;
-			return true;
+			flag = true;
+			return;
 		}
 		for (int i = 0; i < 3; i++) {
 			int nr = r + dr[i];
 			if (nr >= 0 && nr < R && maps[nr][c + 1] == 0) {
 				maps[nr][c + 1] = 1;
-				if (dfs(nr, c + 1)) return true;
+				dfs(nr, c + 1);
+				if(flag) {
+					return;
+				}
 			}
 		}
-		return false;
 	}
-
 }

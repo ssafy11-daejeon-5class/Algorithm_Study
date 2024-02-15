@@ -1,11 +1,11 @@
-package hw._240214.kwonja;
+package hw._240215.kwonja;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BOJ_3109 {
+public class 빵집_boolean {
 
 	/*
 	 * 빵집
@@ -47,14 +47,13 @@ public class BOJ_3109 {
 		}
 		System.out.println(res);
 	}
-	public static void dfs(int curx,int cury) {
+	public static boolean dfs(int curx,int cury) {
+		
 		if(cury==c-1) //파이프 끝에 도달
 		{
-			arrive=1;
 			res++;
-			return;
+			return true;
 		}
-
 		for(int i=0;i<4;i++)
 		{
 			int nx= curx+dx[i];
@@ -62,9 +61,10 @@ public class BOJ_3109 {
 			if(nx<0 || nx>=r || ny<0 || ny>=c)continue;
 			if(board[nx][ny]>0)continue; //건물이거나 방문했다면 패스
 			board[nx][ny]=2;
-			dfs(nx,ny);
-			if(arrive==1)break;
+			if(dfs(nx,ny))return true;
 		}
+		
+		return false;
 	}
 	public static void print()
 	{

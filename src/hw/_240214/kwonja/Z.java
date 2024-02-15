@@ -29,8 +29,6 @@ public class Z {
 		{
 			return;
 		}
-		
-		
 		//inductive
 		int half = 1<<(n-1);
 		
