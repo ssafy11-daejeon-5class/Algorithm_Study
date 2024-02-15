@@ -1,4 +1,4 @@
-package hw._240215.hyeona;
+package algorithm.Algorithm_Study.src.hw._240215.hyeona;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +17,11 @@ import java.util.StringTokenizer;
 
 
 // 말 점프를 K번 다 썼으면 상하좌우 이동만 할 수 있다 -> K번을 점프했는지 기록 필요
+
+/* 습관적으로 visited 방문 검사 할 때 말 점프 횟수를 그대로 가져다 넣어서 계속 틀림
+말 점프를 하러 메서드에 들어왔으니까 횟수를 증가시키고 방문 검사를 해야함
+말 점프를 한칸 증가 시켜서 검사해야함. 생각을 하자.
+* */
 
 class Monkey{
 	int x;
@@ -56,7 +61,7 @@ public class BOJ_1600 {
 		H = Integer.parseInt(st.nextToken());
 		
 		arr = new int[H][W];
-		visited = new boolean[H][W][K+2];
+		visited = new boolean[H][W][K+1];
 		
 		for(int i=0; i<H; i++)
 		{
@@ -98,33 +103,29 @@ public class BOJ_1600 {
 			
 		}
 		
-		
-		
-		
 	}
 
 	private static void go_horse(int x, int y, int horse_jump, int move) {
 		
-		
-		for(int i=0; i<8; i++)
+		if(horse_jump<K)
 		{
-			int nx = x+hx[i];
-			int ny = y+hy[i];
-			
-			
-			if(nx>=0 && ny>=0 && nx<H && ny<W)
+			for(int i=0; i<8; i++)
 			{
-				if(!visited[nx][ny][horse_jump] && arr[nx][ny]!=1 && horse_jump<K)
+				int nx = x+hx[i];
+				int ny = y+hy[i];
+
+
+				if(nx>=0 && ny>=0 && nx<H && ny<W)
 				{
-					visited[nx][ny][horse_jump] = true;
-					queue.offer(new Monkey(nx, ny, horse_jump+1, move+1));
-					Ans++;
+					if(!visited[nx][ny][horse_jump+1] && arr[nx][ny]!=1)
+					{
+						visited[nx][ny][horse_jump+1] = true;
+						queue.offer(new Monkey(nx, ny, horse_jump+1, move+1));
+						Ans++;
+					}
 				}
 			}
 		}
-		
-		
-		
 	}
 
 	private static void go_monkey(int x, int y, int horse_jump, int move) {
