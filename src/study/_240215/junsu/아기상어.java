@@ -5,13 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class 아기상어 {
 
-	static int N, answer, count;
+	static int N, answer, count, sec;
 	static StringTokenizer st;
 	static int[][] maps;
 	static int size = 2;
@@ -37,6 +38,10 @@ public class 아기상어 {
 				}
 			}
 		}
+		
+		bfs(start);
+		bfs(start);
+		bfs(start);
 		bfs(start);
 //		while(bfs(start)) {
 //			continue;
@@ -58,7 +63,7 @@ public class 아기상어 {
 		v = new boolean[N][N];
 		List<int[]> cand = new ArrayList<>();
 		
-		q.offer(new int[] {s[0], s[1], 0});
+		q.offer(new int[] {s[0], s[1], 1});
 		v[s[0]][s[1]] = true;
 		while (!q.isEmpty()) {
 			int[] cur = q.poll();
@@ -72,20 +77,26 @@ public class 아기상어 {
 					}
 					if(maps[ni][nj] < size && maps[ni][nj] != 0) {
 						v[ni][nj]= true;
-						cand.add(new int[] {ni, nj});
+						sec = cur[2];
+						cand.add(new int[] {ni, nj, cur[2]});
 					}
 				}
 			}
 		}
 		if(cand.size() != 0) {
-			cand.sort((a,b)-> a[0] == b[0]?Integer.compare(a[1], b[1]):Integer.compare(a[0], b[0]));
+			cand.sort((a,b)-> a[2] == b[2]? a[0] == b[0]?Integer.compare(a[1], b[1]):Integer.compare(a[0], b[0]):Integer.compare(a[2], b[2]));
+			for (int[] is : cand) {
+				System.out.println(Arrays.toString(is));
+			}
 			count++;
+			answer += sec;
 			if(count == size) {
 				count = 0;
 				size++;
 			}
 			System.out.println(cand.get(0)[0] + " " + cand.get(0)[1]);
-//			start = new int[] {cand.get(0)[0], cand.get(0)[1]};
+			maps[cand.get(0)[0]][cand.get(0)[1]] = 0;
+			start = new int[] {cand.get(0)[0], cand.get(0)[1]};
 			return true;
 		}
 		return false;
