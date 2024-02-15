@@ -1,4 +1,4 @@
-package algorithm.Algorithm_Study.src.hw._240214.hyeona;
+package hw._240214.hyeona;
 
 // 할 수 있는 선택 3개 : 앞으로, 오위, 오아래
 // 출발할 수 있는 위치 : 각 행
@@ -19,7 +19,7 @@ public class BOJ_3109 {
 
     static char[][] arr;
     static boolean[][] visited;
-    static int R, C, Ans;
+    static int R, C, Ans, flag;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -45,13 +45,14 @@ public class BOJ_3109 {
         {
             //System.out.println("start");
             dfs(i,0);
+            flag=0;
         }
 
         System.out.println(Ans);
 
     }
 
-    private static boolean dfs(int x, int y) {
+    private static void dfs(int x, int y) {
 
 
         if(y == C-1)
@@ -59,7 +60,8 @@ public class BOJ_3109 {
             Ans++;
             // 다음 행 재귀?
             // 파이프 하나 추가
-            return true;
+            flag=1;
+            return;
         }
 
 
@@ -76,11 +78,12 @@ public class BOJ_3109 {
                     visited[nx][ny]=true;
                     //System.out.println("nx "+nx+" ny "+ny);
                     // 돌아와서 바로 리턴시켜서 다음 재귀로 못 들어가게 하기
-                    if(dfs(nx, ny))
-                        return true;
+                    dfs(nx, ny);
+                    if(flag==1) return;
+            
+                        
                 }
             }
         }
-        return false;
     }
 }
