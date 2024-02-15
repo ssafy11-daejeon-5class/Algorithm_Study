@@ -119,22 +119,45 @@ public class 무선충전 {
 	{
 		//위치한 배터리가 있는지 계산 2개이상 겹친게 없기 때문에 겹쳤다면 나눠서 더하는게 가장 크다고 생각한다.
 		//만약에 둘다 2개가 겹치는곳에 있을때는 둘중에 큰걸 선택해야한다.
-		int[] arr = new int[a];
 		
+		//배터리 위치를 체크하면서 완전탐색 A를 기준으로
+		int max=0;
 		for(int i=0;i<a;i++)
 		{
-			//배터리에 있을때
+			// A가 배터리에 있을때
+			int sum=0;
 			if(board[player1.x][player1.y][i]>0)
 			{
-				arr[i]=board[player1.x][player1.y][i];
-			}
-			
-			if(board[player2.x][player2.y][i]>0)
-			{
-				arr[i]=board[player2.x][player2.y][i];
+				sum=board[player1.x][player1.y][i];
+				for(int j=0;j<a;j++)
+				{
+					if(i!=j && board[player2.x][player2.y][j]>0)
+					{
+						max=Math.max(max, sum+board[player2.x][player2.y][j]);
+					}
+				}
+				max=Math.max(max, sum);
 			}
 		}
-		System.out.println(res +"   ");
+		for(int i=0;i<a;i++)
+		{
+			// B가 배터리에 있을때
+			int sum=0;
+			if(board[player2.x][player2.y][i]>0)
+			{
+				sum=board[player2.x][player2.y][i];
+				for(int j=0;j<a;j++)
+				{
+					if(i!=j && board[player1.x][player1.y][j]>0)
+					{
+						max=Math.max(max, sum+board[player1.x][player1.y][j]);
+					}
+				}
+				max=Math.max(max, sum);
+			}
+		}
+		res+=max;
+//		System.out.println(res);
 	}
 	public static void print()
 	{
