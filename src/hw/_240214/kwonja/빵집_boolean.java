@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BOJ_3109 {
+public class 빵집_boolean {
 
 	/*
 	 * 빵집
@@ -48,6 +48,7 @@ public class BOJ_3109 {
 		System.out.println(res);
 	}
 	public static void dfs(int curx,int cury) {
+		
 		if(cury==c-1) //파이프 끝에 도달
 		{
 			arrive=1;
