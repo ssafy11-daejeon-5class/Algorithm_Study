@@ -39,9 +39,7 @@ public class 아기상어 {
 				}
 			}
 		}
-        System.out.println(Arrays.toString(start));
 		while(bfs(start)) {
-            System.out.println(Arrays.toString(start));
 			continue;
 		}
 		System.out.println(answer);
@@ -82,11 +80,8 @@ public class 아기상어 {
 		}
 		if(cand.size() != 0) {
 			cand.sort((a,b)-> a[2] == b[2]? a[0] == b[0]?Integer.compare(a[1], b[1]):Integer.compare(a[0], b[0]):Integer.compare(a[2], b[2]));
-			// for (int[] is : cand) {
-			// 	System.out.println(Arrays.toString(is));
-			// }
 			count++;
-			answer += Math.abs(cand.get(0)[0] - start[0]) + Math.abs(cand.get(0)[1] - start[1]);
+            answer += cand.get(0)[2];
 			if(count == size) {
 				count = 0;
 				size++;
