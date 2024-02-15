@@ -30,7 +30,11 @@ public class AdjList {
 			int s = Integer.parseInt(st.nextToken());
 			int e = Integer.parseInt(st.nextToken());
 			int w = Integer.parseInt(st.nextToken());
-			adjList.get(s)
+			adjList.get(s).add(e);
+		}
+
+		for (int i = 0; i < V; i++) {
+			System.out.println(adjList.get(i));
 		}
 
 	}
