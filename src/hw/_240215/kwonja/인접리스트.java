@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 public class 인접리스트 {
 	
 	static List<List<Integer>> adjList = new ArrayList<>();
+	//ArrayList<String>[] list_D1 = new ArrayList[3]; 정점이 정해져 있으면 미리 정점의 개수를 지정해줘도될듯
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());

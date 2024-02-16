@@ -98,7 +98,8 @@ public class BOJ_16236 {
 					//다음이동이 물고기일때가 가장 짧은 경로 이동이다.
 					setFish(visitied[curx][cury]);
 					break;
-				}				
+					//if else를 하게되면 물고기를 먹고나서 q를 돌게된다.
+				}
 				visitied[nx][ny]= visitied[curx][cury]+1;
 				q.offer(new Pair(nx,ny));
 			}
