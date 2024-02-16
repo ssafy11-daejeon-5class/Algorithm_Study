@@ -1,4 +1,4 @@
-package algorithm.Algorithm_Study.src.hw._240213.hyeona;
+package hw._240213.hyeona;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import java.util.StringTokenizer;
 public class BOJ_2580 {
 
 	static int[][] arr;
+	static int flag=0;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		arr = new int[9][9];
@@ -40,19 +41,31 @@ public class BOJ_2580 {
 
 	}
 
-	private static boolean dfs(int x, int y) {
+	private static void dfs(int x, int y) {
 
 		if(y==9)
 		{
+			// 여기에 왔으면 한 행을 조건에 맞게 다 채운 거니까 다음 행 재귀로 출발
 			dfs(x+1, 0);
-			return true;
+			// 끝나고 돌아오면?
+			// 이걸 넣으면 시간을 줄일 수 있다고 생각했는데 틀리네
+			
+			// 한 줄을 다 채웠다고 해서 완벽하게 완성된게 아님 !
+			// 남은 빈칸 채우다가 틀릴 수도 있음 ㅡ3ㅡ
+			// 그래서 여기서 flag 하면 안됨
+			//flag=1;
+			return;
 		}
 
 		if(x==9)
 		{
+			flag=1;
+			// x=9일 때 y=0
 			print();
+			// 여기서 돌아가면 안되고 재귀함수를 종료시켜야함
+			// 돌아가면 어떻게 되나? 계속 출력됨
+			return;
 			//System.exit(0);
-			return true;
 		}
 
 		if(arr[x][y]==0)
@@ -62,17 +75,17 @@ public class BOJ_2580 {
 				if(check_duplicate(x,y,i))
 				{
 					arr[x][y]=i;
-					if(dfs(x, y+1)) return true;
+					dfs(x, y+1);
+					if(flag==1) return;
+					arr[x][y]=0;
 				}
 			}
 			// 다 돌았는데 맞는 값이 없다면 0으로 원복시켜주고 앞선 재귀로 ㄱ ㄱ
-			arr[x][y]=0;
-			return false;
+			// 여기서 앞선 재귀는 앞에 채웠던 빈칸임
+			return;
 		}
 
 		dfs(x, y+1);
-		return false;
-
 	}
 
 	private static boolean check_duplicate(int x, int y, int number) {
