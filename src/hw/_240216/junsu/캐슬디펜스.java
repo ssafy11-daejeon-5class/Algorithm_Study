@@ -1,4 +1,4 @@
-package hw._240216;
+package hw._240216.junsu;
 
 import java.io.BufferedReader;
 import java.io.IOException;
