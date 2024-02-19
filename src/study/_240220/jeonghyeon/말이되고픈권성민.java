@@ -51,6 +51,11 @@ public class 말이되고픈권성민 {
 				int nr = p.r + dr[i];
 				int nc = p.c + dc[i];
 				int ncnt = p.cnt + 1;
+				
+				//ㅇㅇ
+				if(ncnt == 5) return;
+				//ㅐㅐ
+				
 				int nhj;
 				if ((i < 4 || i >= 8))
 					nhj = p.jumps + 1;
