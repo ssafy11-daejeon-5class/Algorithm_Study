@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 //링크드 리스트가 더 성능이 좋다
@@ -17,6 +18,7 @@ public class 프로세서연결하기 {
 	static List<Pair> core = new ArrayList<>();
 	static int[] sel;
 	static int[][] board;
+	static int[][] copyboard;
 	static int[] dx= {1,-1,0,0};
 	static int[] dy= {0,0,1,-1};
 	public static void main(String[] args) throws NumberFormatException, IOException {
@@ -28,13 +30,14 @@ public class 프로세서연결하기 {
 		{
 			n=Integer.parseInt(br.readLine());
 			board = new int[n][n];
+			copyboard = new int[n][];
 			for(int i=0;i<n;i++)
 			{
 				st= new StringTokenizer(br.readLine());
 				for(int j=0;j<n;j++)
 				{
 					board[i][j]=Integer.parseInt(st.nextToken());
-					if(board[i][j]==1)
+					if(board[i][j]==1) //코어는 1
 					{
 						//코어 개수 세기
 						core.add(new Pair(i,j));
@@ -49,27 +52,23 @@ public class 프로세서연결하기 {
 		//각 재귀를 통해 방문여부를 넘겨준다
 	}
 	
-	public static void connect(int[][] v, int idx)
+	public static void connect(int idx)
 	{
 		
-		
+		Pair p =core.get(idx); //코어 뽑기
 		//4방향중 전선 연결하기
 		for(int i=0;i<4;i++)
 		{
 			
 		}
-		//선택코드
-		for(int i=0;i<core.size();i++)
+		
+	}
+	public static void boardcopy()
+	{
+		for(int i=0;i<n;i++)
 		{
-			if(sel[i]!=0)
-			{
-				sel[idx]=1;
-				
-				sel[idx]=0;				
-			}
+			copyboard[i]=Arrays.copyOf(board[i], n);
 		}
-		
-		
 	}
 
 }
