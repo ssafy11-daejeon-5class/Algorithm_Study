@@ -66,11 +66,9 @@ public class 프로세서연결하기 {
 		// TODO Auto-generated method stub
 		if (depth == coreCnt) {
 			if (answerCnt < idx) {
-//				System.out.println(test++);
 				answerCnt = idx;
 				answer = lineCnt;
 			} else if (answerCnt == idx) {
-//				System.out.println(test++);
 				answer = Math.min(answer, lineCnt);
 			}
 			return;

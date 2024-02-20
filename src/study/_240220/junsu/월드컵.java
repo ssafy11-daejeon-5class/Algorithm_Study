@@ -93,7 +93,6 @@ public class 월드컵 {
 			valid(depth + 1);
 			results[team1].win++;
 			results[team2].lose++;
-			
 		}
 		if (results[team1].lose - 1 >= 0 && results[team2].win - 1 >= 0) {
 			results[team1].lose--;
