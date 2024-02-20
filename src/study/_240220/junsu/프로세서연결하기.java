@@ -84,8 +84,8 @@ public class 프로세서연결하기 {
 				combi(depth + 1, idx + 1, lineCnt + addNum);
 				check(i, depth, 0);
 			}
-			combi(depth + 1, idx, lineCnt);
 		}
+		combi(depth + 1, idx, lineCnt);
 	}
 
 	private static void check(int direction, int index, int num) { // 체크할 방향, 프로세서 index, 변경할 숫자
