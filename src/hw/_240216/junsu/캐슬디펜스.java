@@ -110,7 +110,7 @@ public class 캐슬디펜스 {
 				int ni = cur[0] + di[k];
 				int nj = cur[1] + dj[k];
 				if(ni >= 0 && ni < depth && nj >= 0 && nj < M && !v[ni][nj] && cur[2] < D) {
-					if(maps[ni][nj] == 1) {
+					if(temp[ni][nj] == 1) {
 						list.add(new int[] {ni, nj, cur[2] + 1});
 					}
 					q.offer(new int[] {ni, nj, cur[2] + 1});
@@ -124,14 +124,4 @@ public class 캐슬디펜스 {
 			return new Node(list.get(0)[0], list.get(0)[1]);
 		}
 	}
-
-	private static void print() {
-		for (int i = 0; i < maps.length; i++) {
-			for (int j = 0; j < maps[0].length; j++) {
-				System.out.print(maps[i][j] + " ");
-			}
-			System.out.println();
-		}
-	}
-
 }

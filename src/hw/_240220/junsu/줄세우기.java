@@ -14,6 +14,7 @@ public class 줄세우기 { // BOJ_2252
 	static int N, M;
 	static StringTokenizer st;
 	static List<Integer>[] adjList;
+	static int[] edgeCnt;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -23,6 +24,7 @@ public class 줄세우기 { // BOJ_2252
 		M = Integer.parseInt(st.nextToken());
 
 		adjList = new LinkedList[N+1];
+		edgeCnt = new int[N+1];
 		for (int j = 0; j < N + 1; j++) {
 			adjList[j] = new LinkedList<>();
 		}
@@ -31,7 +33,8 @@ public class 줄세우기 { // BOJ_2252
 			st = new StringTokenizer(br.readLine());
 			int s = Integer.parseInt(st.nextToken());
 			int e = Integer.parseInt(st.nextToken());
-			adjList[e].add(s);
+			adjList[s].add(e);
+			edgeCnt[e]++;
 		}
 
 		bfs();
@@ -39,31 +42,22 @@ public class 줄세우기 { // BOJ_2252
 
 	private static void bfs() {
 		Queue<Integer> q = new ArrayDeque<>();
-		boolean[] v = new boolean[N+1];
 		
-		for (int i = 1; i <= N; i++) {
-			if(adjList[i].size() == 0) {
+		for (int i = 1; i < N+1; i++) {
+			if(edgeCnt[i] == 0){
 				q.offer(i);
-				v[i] = true;
 			}
 		}
 		
 		while(!q.isEmpty()) {
 			int cur = q.poll();
 			System.out.print(cur + " ");
-			for(int j = 1 ; j <= N ; j++) {
-				if(adjList[j].contains(cur)) {
-					adjList[j].remove(adjList[j].indexOf(cur));
-				}
-			}
-			
-			for (int i = 1; i <= N; i++) {
-				if(!v[i] && adjList[i].size() == 0) {
+			for (int i : adjList[cur]) {
+				edgeCnt[i]--;
+				if(edgeCnt[i] == 0){
 					q.offer(i);
-					v[i] = true;
 				}
 			}
-			
 		}
 	}
 
