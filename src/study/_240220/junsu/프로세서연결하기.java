@@ -26,7 +26,7 @@ public class 프로세서연결하기 {
 		}
 	}
 
-	static int T, N, answerCnt, answer, lineSum, coreCnt;
+	static int T, N, answerCnt, answer, lineSum, coreCnt, addNum;
 	static List<Node> cores;
 	static StringTokenizer st;
 	static boolean[][] v;
@@ -56,27 +56,21 @@ public class 프로세서연결하기 {
 			}
 
 			coreCnt = cores.size();
-			combi(0, 0, 0, 0);
-
-//			for (int i = 0; i < cores.size(); i++) {
-//				sel = new Node[cores.size() - i];
-//				combi(0, cores.size() - i);
-//				if(answer != Integer.MAX_VALUE) {
-//					System.out.println("#" + t + " " + answer);
-//					break;
-//				}
-//			}
+			combi(0, 0, 0);
+			System.out.println("#" + t + " " + answer);
 		}
 
 	}
-
-	private static void combi(int depth, int idx, int cnt, int lineCnt) {
+	static int test = 0;
+	private static void combi(int depth, int idx, int lineCnt) { // 탐색의 깊이, List의 인덱스, 전선의 길이
 		// TODO Auto-generated method stub
 		if (depth == coreCnt) {
-			if (answerCnt < cnt) {
-				answerCnt = cnt;
+			if (answerCnt < idx) {
+//				System.out.println(test++);
+				answerCnt = idx;
 				answer = lineCnt;
-			} else if (answerCnt == cnt) {
+			} else if (answerCnt == idx) {
+//				System.out.println(test++);
 				answer = Math.min(answer, lineCnt);
 			}
 			return;
@@ -84,7 +78,47 @@ public class 프로세서연결하기 {
 
 		// 체크해서 해당 방향으로 직진이 가능하다면 check() -> 재귀타고 돌아와서 unCheck() 해주고 제외하고 재귀한번 더 타기.
 		for (int i = 0; i < 4; i++) {
-
+			if (valid(i, depth)) {
+				addNum = 0;
+				check(i, depth, 2);
+				combi(depth + 1, idx + 1, lineCnt + addNum);
+				check(i, depth, 0);
+			}
+			combi(depth + 1, idx, lineCnt);
 		}
+	}
+
+	private static void check(int direction, int index, int num) { // 체크할 방향, 프로세서 index, 변경할 숫자
+		int curi = cores.get(index).i;
+		int curj = cores.get(index).j;
+
+		for (int k = 1; k < N; k++) {
+			curi = curi + di[direction];
+			curj = curj + dj[direction];
+			if (curi >= 0 && curi < N && curj >= 0 && curj < N) {
+				maps[curi][curj] = num;
+				addNum++;
+			} else {
+				break;
+			}
+		}
+	}
+
+	private static boolean valid(int direction, int index) { // 탐색할 방향, 프로세서 index
+		int curi = cores.get(index).i;
+		int curj = cores.get(index).j;
+		for (int k = 1; k < N; k++) {
+			curi = curi + di[direction];
+			curj = curj + dj[direction];
+
+			if (curi >= 0 && curi < N && curj >= 0 && curj < N) {
+				if (maps[curi][curj] != 0) {
+					return false;
+				}
+			} else {
+				break;
+			}
+		}
+		return true;
 	}
 }
