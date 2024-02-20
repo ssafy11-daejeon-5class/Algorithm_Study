@@ -206,8 +206,6 @@ public class BOJ_치즈 {
 
 	private static void change_background(int x, int y) {
 		
-		v = new boolean[N][M];
-		
 		Queue<Cheese> queue = new LinkedList<>();
 		queue.offer(new Cheese(x, y));
 		v[x][y] = true;
@@ -235,29 +233,5 @@ public class BOJ_치즈 {
 		}
 		
 	}
-	
-	
-	
-	
-	
-//	private static boolean check_one() {
-//		
-//		// 1이 있으면 false를 리턴
-//		for(int i=0; i<N; i++)
-//		{
-//			for(int j=0; j<M; j++)
-//			{
-//				if(arr[i][j] == 1)
-//				{
-//					return false;
-//				}
-//			}
-//		}
-//		
-//		return true;
-//		
-//	}
-	
-	
 
 }
