@@ -72,7 +72,6 @@ public class 감시 {
 //			System.out.println();
 			return;
 		}
-		int[][] board = copyboard(copyboard);
 		//1번 cctvs 일때
 		if(cctvs.get(idx).num==1)
 		{
@@ -82,6 +81,7 @@ public class 감시 {
 			int cury=p.y;
 			for(int i=0;i<4;i++)
 			{
+				int[][] board = copyboard(copyboard);
 				int count=0;
 				int nx=curx;
 				int ny=cury;
@@ -109,15 +109,15 @@ public class 감시 {
 				}
 				//다음 cctv 적용
 				recursive(idx+1,board);
-				fillx=curx;
-				filly=cury;
-				for(int j=0;j<count;j++)
-				{
-					fillx+=dx[i];
-					filly+=dy[i];
-					if(board[fillx][filly] !=9)continue;
-					board[fillx][filly]=0;
-				}
+//				fillx=curx;
+//				filly=cury;
+//				for(int j=0;j<count;j++)
+//				{
+//					fillx+=dx[i];
+//					filly+=dy[i];
+//					if(board[fillx][filly] !=9)continue;
+//					board[fillx][filly]=0;
+//				}
 			}
 		}
 		//2번 카메라 일때
@@ -128,6 +128,7 @@ public class 감시 {
 			int cury=p.y;
 			for(int i=0;i<4;i=i+2)
 			{
+				int[][] board = copyboard(copyboard);
 				int count1=0;
 				int count2=0;
 				int nx=curx;
@@ -181,34 +182,36 @@ public class 감시 {
 				}
 				//다음 cctv 적용
 				recursive(idx+1,board);
-				fillx=curx;
-				filly=cury;
-				for(int j=0;j<count1;j++)
-				{
-					fillx+=dx2[i];
-					filly+=dy2[i];
-					if(board[fillx][filly] !=9)continue;
-					board[fillx][filly]=0;
-				}
-				fillx=curx;
-				filly=cury;
-				for(int j=0;j<count2;j++)
-				{
-					fillx+=dx2[i+1];
-					filly+=dy2[i+1];
-					if(board[fillx][filly] !=9)continue;
-					board[fillx][filly]=0;
-				}
+//				fillx=curx;
+//				filly=cury;
+//				for(int j=0;j<count1;j++)
+//				{
+//					fillx+=dx2[i];
+//					filly+=dy2[i];
+//					if(board[fillx][filly] !=9)continue;
+//					board[fillx][filly]=0;
+//				}
+//				fillx=curx;
+//				filly=cury;
+//				for(int j=0;j<count2;j++)
+//				{
+//					fillx+=dx2[i+1];
+//					filly+=dy2[i+1];
+//					if(board[fillx][filly] !=9)continue;
+//					board[fillx][filly]=0;
+//				}
 			}
 		}
 				//3번 카메라 일때
 				else if(cctvs.get(idx).num==3)
 				{
+					
 					Point p =cctvs.get(idx);
 					int curx=p.x;
 					int cury=p.y;
 					for(int i=0;i<4;i++)
 					{
+						int[][] board = copyboard(copyboard);
 						int count1=0;
 						int count2=0;
 						int nx=curx;
@@ -262,34 +265,36 @@ public class 감시 {
 						}
 						//다음 cctv 적용
 						recursive(idx+1,board);
-						fillx=curx;
-						filly=cury;
-						for(int j=0;j<count1;j++)
-						{
-							fillx+=dx3[i];
-							filly+=dy3[i];
-							if(board[fillx][filly] !=9)continue;
-							board[fillx][filly]=0;
-						}
-						fillx=curx;
-						filly=cury;
-						for(int j=0;j<count2;j++)
-						{
-							fillx+=dx3[i+1];
-							filly+=dy3[i+1];
-							if(board[fillx][filly] !=9)continue;
-							board[fillx][filly]=0;
-						}
+//						fillx=curx;
+//						filly=cury;
+//						for(int j=0;j<count1;j++)
+//						{
+//							fillx+=dx3[i];
+//							filly+=dy3[i];
+//							if(board[fillx][filly] !=9)continue;
+//							board[fillx][filly]=0;
+//						}
+//						fillx=curx;
+//						filly=cury;
+//						for(int j=0;j<count2;j++)
+//						{
+//							fillx+=dx3[i+1];
+//							filly+=dy3[i+1];
+//							if(board[fillx][filly] !=9)continue;
+//							board[fillx][filly]=0;
+//						}
 					}
 				}
 				//4번 카메라 일때
 				else if(cctvs.get(idx).num==4)
 				{
+					
 					Point p =cctvs.get(idx);
 					int curx=p.x;
 					int cury=p.y;
 					for(int i=0;i<4;i++)
 					{
+						int[][] board = copyboard(copyboard);
 						int count1=0;
 						int count2=0;
 						int count3=0;
@@ -398,6 +403,7 @@ public class 감시 {
 				//5번 카메라 일때
 				else if(cctvs.get(idx).num==5)
 				{
+					int[][] board = copyboard(copyboard);
 					Point p =cctvs.get(idx);
 					int curx=p.x;
 					int cury=p.y;
