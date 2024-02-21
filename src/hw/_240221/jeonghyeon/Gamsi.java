@@ -76,6 +76,7 @@ public class Gamsi {
 			}
 			recursive(idx + 1, totalCctvCnt + cctvCnt);
 
+			
 		}
 
 	}
