@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-public class ChangyongVillage {
+public class ChangyongVillage_DisJointSet {
 	static int N, M;
 	static int[] set;
 	static int[] height;
