@@ -1,27 +1,44 @@
 package hw._240222.jeonghyeon;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class LegMaking2 {
-	static int V, E;
-	static Edge[] edgeList;
-	static int[] set;
-
 	static int R, C;
 	static char[][] map;
 	static boolean[][] visited;
 	static int islandNum;
 	static int[][] adjMatrix;
-//	static List<E>
+
+	static List<Edge> edgeList;
+	static int[] set;
 
 	public static void main(String[] args) throws Exception {
+
+		getInputAndMakeMap();
+
+		markingIslands();
+
+		makeAdjMatrix();
+
+		makeEdgeListAndSort();
+
+		makeSet();
+
+		int answer = getMinimumTotalLength();
+		System.out.println(answer);
+
+	}
+
+	private static void getInputAndMakeMap() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		StringBuilder sb = new StringBuilder();
 
 		st = new StringTokenizer(br.readLine());
 		R = Integer.parseInt(st.nextToken());
@@ -33,9 +50,29 @@ public class LegMaking2 {
 				map[i][j] = a.charAt(j * 2);
 			}
 		}
+	}
 
+	private static int getMinimumTotalLength() {
+		int cnt = 0;
+		int totalLength = 0;
+		boolean isPossible = false;
+		for (Edge edge : edgeList) {
+			if (union(edge.from, edge.to)) {
+				totalLength += edge.weight;
+				if (++cnt == islandNum - 1) {
+					isPossible = true;
+					break;
+				}
+			}
+		}
+		if (isPossible)
+			return totalLength;
+		else
+			return -1;
+	}
+
+	private static void markingIslands() {
 		visited = new boolean[R][C];
-
 		for (int i = 0; i < R; i++) {
 			for (int j = 0; j < C; j++) {
 				if (!visited[i][j] && map[i][j] == '1') {
@@ -44,86 +81,6 @@ public class LegMaking2 {
 
 			}
 		}
-
-		printMap();
-
-		makeAdjMatrix();
-
-//		System.out.println();
-//		for (int i = 0; i <= islandNum; i++) {
-//			for (int j = 0; j <= islandNum; j++) {
-//				if (adjMatrix[i][j] > 1000)
-//					System.out.print(9 + " ");
-//				else
-//					System.out.print(adjMatrix[i][j] + " ");
-//			}
-//			System.out.println();
-//
-//		}
-
-//		V = Integer.parseInt(st.nextToken());
-//		E = Integer.parseInt(st.nextToken());
-//		edgeList = new Edge[E];
-//		for (int i = 0; i < E; i++) {
-//			st = new StringTokenizer(br.readLine());
-//			edgeList[i] = new Edge(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()),
-//					Integer.parseInt(st.nextToken()));
-//		}
-//		set = new int[V + 1];
-//		for (int i = 1; i <= V; i++) {
-//			set[i] = i;
-//		}
-//
-//		Arrays.sort(edgeList);
-//
-//		for (Edge edge : edgeList) {
-//			System.out.println("list : " + edge.from + " " + edge.to + " " + edge.weight);
-//		}
-//
-//		int cnt = 0;
-//		long totalLength = 0;
-//		for (Edge edge : edgeList) {
-//			if (union(edge.from, edge.to)) {
-//				totalLength += edge.weight;
-//				System.out.println(edge.from + " " + edge.to);
-//				if (++cnt == V - 1) {
-//					break;
-//				}
-//			}
-//		}
-
-	}
-
-	public static boolean union(int e1, int e2) {
-		int e1Root = find(e1);
-		int e2Root = find(e2);
-		if (e1Root == e2Root)
-			return false;
-
-		set[e1Root] = e2Root;
-		return true;
-	}
-
-	public static int find(int e) {
-		if (e == set[e])
-			return e;
-		return set[e] = find(set[e]);
-	}
-
-	static class Edge implements Comparable<Edge> {
-		int from, to, weight;
-
-		public Edge(int from, int to, int weight) {
-			this.from = from;
-			this.to = to;
-			this.weight = weight;
-		}
-
-		@Override
-		public int compareTo(Edge e) {
-			return this.weight - e.weight;
-		}
-
 	}
 
 	private static void bfs(int r, int c, int islandNum) {
@@ -164,27 +121,43 @@ public class LegMaking2 {
 			for (int j = 0; j < C; j++) {
 				if (j != C - 1 && map[i][j] != '0' && map[i][j + 1] == '0') {
 					int lengthToOppositeSide = getLengthToOppositeSide(i, j, 0);
-					if (lengthToOppositeSide == -1)
-						continue;
-
-					int oppositeIslandNum = map[i][j + lengthToOppositeSide + 1] - '0';
-					adjMatrix[map[i][j] - '0'][oppositeIslandNum] = Math
-							.min(adjMatrix[map[i][j] - '0'][oppositeIslandNum], lengthToOppositeSide);
-					adjMatrix[oppositeIslandNum][map[i][j] - '0'] = Math
-							.min(adjMatrix[oppositeIslandNum][map[i][j] - '0'], lengthToOppositeSide);
+					if (lengthToOppositeSide != -1 && lengthToOppositeSide >= 2) {
+						int oppositeIslandNum = map[i][j + lengthToOppositeSide + 1] - '0';
+						adjMatrix[map[i][j] - '0'][oppositeIslandNum] = Math
+								.min(adjMatrix[map[i][j] - '0'][oppositeIslandNum], lengthToOppositeSide);
+						adjMatrix[oppositeIslandNum][map[i][j] - '0'] = Math
+								.min(adjMatrix[oppositeIslandNum][map[i][j] - '0'], lengthToOppositeSide);
+					}
 				}
 				if (i != R - 1 && map[i][j] != '0' && map[i + 1][j] == '0') {
 					int lengthToOppositeSide = getLengthToOppositeSide(i, j, 1);
-					if (lengthToOppositeSide == -1)
-						continue;
-
-					int oppositeIslandNum = map[i + lengthToOppositeSide + 1][j] - '0';
-					adjMatrix[map[i][j] - '0'][oppositeIslandNum] = Math
-							.min(adjMatrix[map[i][j] - '0'][oppositeIslandNum], lengthToOppositeSide);
-					adjMatrix[oppositeIslandNum][map[i][j] - '0'] = Math
-							.min(adjMatrix[oppositeIslandNum][map[i][j] - '0'], lengthToOppositeSide);
+					if (lengthToOppositeSide != -1 && lengthToOppositeSide >= 2) {
+						int oppositeIslandNum = map[i + lengthToOppositeSide + 1][j] - '0';
+						adjMatrix[map[i][j] - '0'][oppositeIslandNum] = Math
+								.min(adjMatrix[map[i][j] - '0'][oppositeIslandNum], lengthToOppositeSide);
+						adjMatrix[oppositeIslandNum][map[i][j] - '0'] = Math
+								.min(adjMatrix[oppositeIslandNum][map[i][j] - '0'], lengthToOppositeSide);
+					}
 				}
 			}
+		}
+	}
+
+	static void makeEdgeListAndSort() {
+		edgeList = new ArrayList<>();
+		for (int i = 1; i < islandNum; i++) {
+			for (int j = i + 1; j <= islandNum; j++) {
+				if (adjMatrix[i][j] <= 10)
+					edgeList.add(new Edge(i, j, adjMatrix[i][j]));
+			}
+		}
+		edgeList.sort(null);
+	}
+
+	private static void makeSet() {
+		set = new int[islandNum + 1];
+		for (int i = 1; i <= islandNum; i++) {
+			set[i] = i;
 		}
 	}
 
@@ -198,11 +171,6 @@ public class LegMaking2 {
 		if (direction == 0) {
 			for (int nc = c + 1; nc < C; nc++) {
 				if (map[r][nc] != '0') {
-					// 임시
-					if (r == 3 && c == 1 && nc == 5) {
-						System.out.println("here! " + (nc - c - 1));
-					}
-					// 여기까지
 					return nc - c - 1;
 				}
 			}
@@ -225,32 +193,36 @@ public class LegMaking2 {
 		}
 	}
 
-//	static class Edge implements Comparable<Edge> {
-//		int from, to, weight;
-//
-//		public Edge(int from, int to, int weight) {
-//			this.from = from;
-//			this.to = to;
-//			this.weight = weight;
-//		}
-//
-//		@Override
-//		public int compareTo(Edge e) {
-//			return this.weight - e.weight;
-//		}
-//
-//	}
+	public static boolean union(int e1, int e2) {
+		int e1Root = find(e1);
+		int e2Root = find(e2);
+		if (e1Root == e2Root)
+			return false;
 
-	private static void printMap() {
-		System.out.println();
-		for (int i = 0; i < R; i++) {
-			for (int j = 0; j < C; j++) {
-				System.out.print(map[i][j] + " ");
+		set[e1Root] = e2Root;
+		return true;
+	}
 
-			}
-			System.out.println();
+	public static int find(int e) {
+		if (e == set[e])
+			return e;
+		return set[e] = find(set[e]);
+	}
 
+	static class Edge implements Comparable<Edge> {
+		int from, to, weight;
+
+		public Edge(int from, int to, int weight) {
+			this.from = from;
+			this.to = to;
+			this.weight = weight;
 		}
+
+		@Override
+		public int compareTo(Edge e) {
+			return this.weight - e.weight;
+		}
+
 	}
 
 }
