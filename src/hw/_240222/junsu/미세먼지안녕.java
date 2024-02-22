@@ -59,7 +59,7 @@ public class 미세먼지안녕 {
 	static int[] di = { 0, 1, 0, -1 };
 	static int[] dj = { 1, 0, -1, 0 };
 
-	private static void refresh() {
+	private static void refresh() { 
 		Node up = refresher[0];		// 반시계방향으로 도는 위쪽 공기청정기
 		Node down = refresher[1];	// 시계방향으로 도는 아래쪽 공기청정기
 	}
