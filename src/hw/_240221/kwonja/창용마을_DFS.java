@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class 창용마을무리의개수 {
+public class 창용마을_DFS {
 	
 	static int n;
 	static int m;
