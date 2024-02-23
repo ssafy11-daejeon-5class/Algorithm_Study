@@ -243,6 +243,7 @@ public class BOJ_미세먼지 {
 			// -1은 옮기면 안됨
 			if(nx>=sr && ny>=sc && nx<=er && ny<=ec)
 			{
+				// 공기청정기는 옮기면 안되므로 위치만 갱신
 				if(arr[x][y] == -1)
 				{
 					x = nx;
@@ -250,7 +251,7 @@ public class BOJ_미세먼지 {
 					continue;
 				}
 				
-				
+				// 공기청정기로 들어가면 해당 자리는 0 처리
 				if(arr[nx][ny] == -1) arr[x][y]=0;
 				else {
 					arr[x][y] = arr[nx][ny];
