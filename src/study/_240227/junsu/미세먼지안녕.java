@@ -1,4 +1,4 @@
-package hw._240222.junsu;
+package study._240227.junsu;
 
 import java.io.BufferedReader;
 import java.io.IOException;
