@@ -46,22 +46,47 @@ public class 미세먼지안녕 {
 				}
 			}
 		}
-
+		
 		for (int i = 0; i < T; i++) {
-//			spread();
-			refresh();
+			maps = spread();
+			maps = refresh();
 			System.out.println();
 			print();
 		}
 	}
-
+	
+	private static int[][] spread() {
+		int[][] res = new int[R][C];
+		int count;
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				if(maps[i][j] != 0 && maps[i][j] == -1){
+					count = 0;
+					for (int k = 0; k < 4; k++) {
+						int ni = i + di[k];
+						int nj = j + dj[k];
+						if(ni >= 0 && ni < R && nj >= 0 && nj < C){
+							if(maps[ni][nj] != -1){
+								count++;
+								
+							}
+						}
+					}
+				}
+			}	
+		}
+		return res;
+	}
+	
 	// 시계방향으로 설정
 	static int[] di = { 0, 1, 0, -1 };
 	static int[] dj = { 1, 0, -1, 0 };
-
-	private static void refresh() { 
+	
+	private static int[][] refresh() { 
+		int[][] res = new int[R][C];
 		Node up = refresher[0];		// 반시계방향으로 도는 위쪽 공기청정기
 		Node down = refresher[1];	// 시계방향으로 도는 아래쪽 공기청정기
+		return res;
 	}
 
 	private static void print() {
