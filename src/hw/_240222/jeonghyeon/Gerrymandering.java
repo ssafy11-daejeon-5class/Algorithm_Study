@@ -129,7 +129,7 @@ public class Gerrymandering {
 					}
 				}
 
-				if (flag) {
+				if (flag) {	
 					result = true;
 					minValue = Math.min(minValue, Math.abs(sum1 - sum2));
 				}
