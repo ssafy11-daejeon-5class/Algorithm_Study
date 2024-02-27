@@ -8,6 +8,10 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 // 백준 1600	
+// 2차원 방문배열로는 역시 풀 수가 없었따
+// visited를 bool[R][C][2^K]로 해야 말점프 한번도 안한 방문도 체크할 수 있다
+// 아니 근데 말점프 안한거를 
+
 public class 말이되고픈권성민 {
 	static int K;
 	static int R;
@@ -32,13 +36,13 @@ public class 말이되고픈권성민 {
 				map[i][j] = st.nextToken().charAt(0);
 			}
 		}
-
+        
 		if (R == 1 && C == 1) {
 			System.out.println(0);
 			return;
 		}
-
 		bfs();
+
 	}
 
 	private static void bfs() {
@@ -54,12 +58,12 @@ public class 말이되고픈권성민 {
 			for (int i = 0; i < dr.length; i++) {
 				int nr = p.r + dr[i];
 				int nc = p.c + dc[i];
-				int ncnt = p.jumpCnt + 1;
+				int ncnt = p.cnt + 1;
 				int nhj;
 				if ((i < 4 || i >= 8))
-					nhj = p.horseJumpCnt + 1;
+					nhj = p.jumps + 1;
 				else
-					nhj = p.horseJumpCnt;
+					nhj = p.jumps;
 
 				if (notInArea(nr, nc)) // 맵 벗어났을 때
 					continue;
@@ -74,7 +78,7 @@ public class 말이되고픈권성민 {
 					System.out.println(ncnt);
 					return;
 				}
-
+                
 				Point np;
 				np = new Point(nr, nc, ncnt, nhj);
 				queue.offer(np);
@@ -97,19 +101,19 @@ public class 말이되고픈권성민 {
 }
 
 class Point {
-	int r, c, jumpCnt, horseJumpCnt;
+	int r, c, cnt, jumps;
 
 	Point(int r, int c) {
 		this.r = r;
 		this.c = c;
-		this.jumpCnt = 0;
-		this.horseJumpCnt = 0;
+		this.cnt = 0;
+		this.jumps = 0;
 	}
 
 	Point(int r, int c, int cnt, int jumps) {
 		this.r = r;
 		this.c = c;
-		this.jumpCnt = cnt;
-		this.horseJumpCnt = jumps;
+		this.cnt = cnt;
+		this.jumps = jumps;
 	}
 }
