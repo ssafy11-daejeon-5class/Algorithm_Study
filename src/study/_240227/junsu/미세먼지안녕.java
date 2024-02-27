@@ -46,22 +46,75 @@ public class 미세먼지안녕 {
 				}
 			}
 		}
-
+		
 		for (int i = 0; i < T; i++) {
-//			spread();
-			refresh();
+//			maps = spread();
+			maps = refresh();
 			System.out.println();
 			print();
 		}
 	}
-
+	
+	private static int[][] spread() {
+		int[][] res = new int[R][C];
+		int count;
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				if(maps[i][j] != 0 && maps[i][j] == -1){
+					count = 0;
+					for (int k = 0; k < 4; k++) {
+						int ni = i + di[k];
+						int nj = j + dj[k];
+						if(ni >= 0 && ni < R && nj >= 0 && nj < C){
+							if(maps[ni][nj] != -1 && maps[ni][nj] != 0){
+								continue;
+							}
+						}
+					}
+				}
+			}	
+		}
+		return res;
+	}
+	
 	// 시계방향으로 설정
 	static int[] di = { 0, 1, 0, -1 };
 	static int[] dj = { 1, 0, -1, 0 };
-
-	private static void refresh() { 
+	
+	private static int[][] refresh() { 
+		int[][] res = new int[R][C];
 		Node up = refresher[0];		// 반시계방향으로 도는 위쪽 공기청정기
+		for (int i = 1; i < C; i++) {
+			res[up.i][i] = maps[up.i][i-1];
+		}
+		for (int i = up.i; i > 0 ; i--) {
+			res[i-1][C-1] = maps[i][C-1];
+		}
+		for (int i = C-1; i > 0 ; i--) {
+			res[0][i-1] = maps[0][i];
+		}
+		for (int i = 0; i < up.i ; i++) {
+			res[i+1][0] = maps[i][0];
+		}
+		res[up.i][up.j] = -1;
+		res[up.i][up.j+1] = 0;
+		
 		Node down = refresher[1];	// 시계방향으로 도는 아래쪽 공기청정기
+		for (int i = 1; i < C; i++) {
+			res[down.i][i] = maps[down.i][i-1];
+		}
+		for (int i = down.i; i < R-1 ; i++) {
+			res[i+1][C-1] = maps[i][C-1];
+		}
+		for (int i = C-1; i > 0 ; i--) {
+			res[R-1][i-1] = maps[R-1][i];
+		}
+		for (int i = R-1; i > down.i ; i--) {
+			res[i-1][0] = maps[i][0];
+		}
+		res[down.i][down.j] = -1;
+		res[down.i][down.j+1] = 0;
+		return res;
 	}
 
 	private static void print() {
