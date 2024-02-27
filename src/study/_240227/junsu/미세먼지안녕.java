@@ -3,6 +3,7 @@ package study._240227.junsu;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class 미세먼지안녕 {
@@ -14,15 +15,9 @@ public class 미세먼지안녕 {
 			this.i = i;
 			this.j = j;
 		}
-
-		@Override
-		public String toString() {
-			// TODO Auto-generated method stub
-			return i + " " + j;
-		}
 	}
 
-	static int R, C, T;
+	static int R, C, T, answer;
 	static int[][] maps;
 	static StringTokenizer st;
 	static Node[] refresher = new Node[2];
@@ -48,31 +43,48 @@ public class 미세먼지안녕 {
 		}
 		
 		for (int i = 0; i < T; i++) {
-//			maps = spread();
+			maps = spread();
 			maps = refresh();
-			System.out.println();
-			print();
 		}
+		answer = count();
+		System.out.println(answer);
 	}
 	
-	private static int[][] spread() {
-		int[][] res = new int[R][C];
-		int count;
+	private static int count() {
+		int res = 0;
 		for (int i = 0; i < R; i++) {
 			for (int j = 0; j < C; j++) {
-				if(maps[i][j] != 0 && maps[i][j] == -1){
-					count = 0;
+				if(maps[i][j] != -1) {
+					res += maps[i][j];
+				}
+			}
+		}
+		return res;
+	}
+
+	private static int[][] spread() {
+		int[][] res = new int[R][C];
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				if(maps[i][j] != 0 && maps[i][j] != -1){
 					for (int k = 0; k < 4; k++) {
 						int ni = i + di[k];
 						int nj = j + dj[k];
 						if(ni >= 0 && ni < R && nj >= 0 && nj < C){
-							if(maps[ni][nj] != -1 && maps[ni][nj] != 0){
-								continue;
+							if(maps[ni][nj] != -1){
+								res[ni][nj] += maps[i][j]/5;
+								res[i][j] -= maps[i][j]/5;
 							}
 						}
 					}
 				}
 			}	
+		}
+		
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				res[i][j] += maps[i][j];
+			}
 		}
 		return res;
 	}
@@ -83,6 +95,9 @@ public class 미세먼지안녕 {
 	
 	private static int[][] refresh() { 
 		int[][] res = new int[R][C];
+		for (int i = 0; i < R; i++) {
+			res[i] = Arrays.copyOf(maps[i], maps[i].length);
+		}
 		Node up = refresher[0];		// 반시계방향으로 도는 위쪽 공기청정기
 		for (int i = 1; i < C; i++) {
 			res[up.i][i] = maps[up.i][i-1];
