@@ -9,12 +9,12 @@ import java.util.StringTokenizer;
 public class 줄기세포배양 {
 	
 	static int n,m,k;
+	static int ans;
 	static int time=0;
-	static int[][] board= new int[500][500];
-	static int[][] visited= new int[500][500];
+	static int[][] board;
 	static int[] dx= {1,-1,0,0};
 	static int[] dy= {0,0,1,-1};
-	static PriorityQueue<Point> pq = new PriorityQueue<>();
+	static PriorityQueue<Point> pq;
 	static class Point implements Comparable<Point>{
 		int x, y,lifetime,checktime;
 
@@ -28,7 +28,11 @@ public class 줄기세포배양 {
 
 		@Override
 		public int compareTo(Point o) {
-			return Integer.compare(lifetime, o.lifetime);
+			if(checktime == o.checktime)
+			{
+				return o.lifetime-this.lifetime ;
+			}
+			return Integer.compare(checktime, o.checktime);
 		}
 		
 	}
@@ -39,23 +43,26 @@ public class 줄기세포배양 {
 		for(int test_case=1; test_case<=T; test_case++)
 		{
 			time=0;
+			board= new int[400][400];
+			ans=0;
+			pq = new PriorityQueue<>();
 			st=new StringTokenizer(br.readLine());
 			n= Integer.parseInt(st.nextToken());
 			m= Integer.parseInt(st.nextToken());
 			k= Integer.parseInt(st.nextToken());
-			for(int i=250;i<250 + n;i++)
+			for(int i=180;i<180 + n;i++)
 			{
 				st=new StringTokenizer(br.readLine());
-				for(int j=250;j<250+ m;j++)
+				for(int j=180;j<180+ m;j++)
 				{
 					board[i][j]=Integer.parseInt(st.nextToken());
 					//초기값 세팅
-					pq.offer(new Point(i, j, board[i][j],board[i][j]));
-					visited[i][j]=1; //큐에 넣은 친구는 방문하지 못함
+					if(board[i][j]!=0) pq.offer(new Point(i, j, board[i][j],board[i][j]));
 				}
 			}
 			//탐색 시작!
-			
+			bfs();
+			System.out.println("#" + test_case + " " + ans);
 		}
 	}
 	
@@ -63,12 +70,14 @@ public class 줄기세포배양 {
 	{
 		while(!pq.isEmpty())
 		{
-			Point p = pq.poll();
-			if(p.lifetime>time)
+			if(time==k)break;
+			Point p = pq.peek();
+			if(p.checktime>time)
 			{
 				time++;
 				continue;
 			}
+			pq.poll();
 			//time == lifetime 활성 상태가 된다면
 			int curx = p.x;
 			int cury = p.y;
@@ -76,10 +85,23 @@ public class 줄기세포배양 {
 			{
 				int nx = curx +dx[i];
 				int ny = cury +dy[i];
-				if(visited[nx][ny]==1)continue; //이미 세포가 있으면 방문x
-				pq.offer(new Point(nx, ny, ));
-				visited[i][j]=1; //큐에 넣은 친구는 방문하지 못함
+				if(board[nx][ny]>0)continue; //이미 세포가 있으면 방문x
+				pq.offer(new Point(nx, ny,p.lifetime,time + p.lifetime + 1));
+				board[nx][ny]=time + p.lifetime *2; //큐에 넣은 친구는 방문하지 못함
 			}
+		}
+		print();
+	}
+	public static void print()
+	{
+		for(int i=0;i<400;i++)
+		{
+			for(int j=0;j<400;j++)
+			{
+				if(board[i][j]>=time)ans++;
+//				System.out.print(board[i][j] + " ");
+			}
+//			System.out.println();
 		}
 	}
 
