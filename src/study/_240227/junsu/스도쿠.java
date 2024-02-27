@@ -46,7 +46,7 @@ public class 스도쿠 {
 				maps[r][c] = 0;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private static void print(int[][] maps) {
@@ -74,10 +74,12 @@ public class 스도쿠 {
 			}
 		}
 		
+		int ni = (r/3) *3;
+		int nj = (c/3) *3;
 		// 사각형 점검
-		for (int i = (r/3) * 3; i < 3 + r/3; i++) {
-			for (int j = (c/3) * 3; j < 3 + c/3; j++) {
-				if(maps[i][j] == num) {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if(maps[ni + i][nj + j] == num) {
 					flag = false;
 				}
 			}
