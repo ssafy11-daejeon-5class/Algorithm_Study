@@ -15,20 +15,19 @@ public class 줄기세포배양 {
 
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
+	static StringBuilder sb = new StringBuilder();
 
 	public static void main(String[] args) throws Exception {
 
 		T = Integer.parseInt(br.readLine());
-		for (int i = 0; i < T; i++) {
+		for (int t = 1; t <= T; t++) {
 			getInput();
-
-			for (int t = 1; t <= K; t++) {
-				spread(t);
+			for (int k = 1; k <= K; k++) {
+				spread(k);
 			}
-			printAnswer(i);
+			putAnswer(t);
 		}
-
-//		printMap();
+		System.out.println(sb);
 	}
 
 	private static void getInput() throws Exception {
@@ -36,13 +35,6 @@ public class 줄기세포배양 {
 		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
-
-		/*
-		 * 세포 증식이 가장 빠른 경우(=생명력이 1) 2초마다 사방으로 1씩 범위가 넓어진다. => 가장 빠른 경우에도 세포의 범위는 (R또는C)
-		 * + K면 충분하다.
-		 * 
-		 * 
-		 */
 
 		mapR = R + K; // 맵의 크기
 		mapC = C + K;
@@ -57,9 +49,7 @@ public class 줄기세포배양 {
 				if (cellMap[i][j] != 0)
 					isExist[i][j] = true;
 			}
-
 		}
-
 	}
 
 	private static void spread(int time) {
@@ -100,21 +90,7 @@ public class 줄기세포배양 {
 		}
 	}
 
-	private static void printMap() {
-		StringBuilder sb = new StringBuilder();
-		for (int r = 0; r < R; r++) {
-			for (int c = 0; c < C; c++) {
-				if (cellMap[r][c] >= 0 && cellMap[r][c] < 10)
-					sb.append(" ");
-				sb.append(cellMap[r][c] + " ");
-			}
-			sb.append("\n");
-		}
-
-		System.out.println(sb + "\n");
-	}
-
-	private static void printAnswer(int i) {
+	private static void putAnswer(int i) {
 		int answer = 0;
 		for (int r = 0; r < mapR; r++) {
 			for (int c = 0; c < mapC; c++) {
@@ -123,8 +99,7 @@ public class 줄기세포배양 {
 				}
 			}
 		}
-
-		System.out.println("#" + i + " " + answer);
+		sb.append("#" + i + " " + answer + "\n");
 	}
 
 	static class NewCell {
@@ -139,17 +114,3 @@ public class 줄기세포배양 {
 
 	}
 }
-
-/*
- * 
- * private static void spread(int time) { for (int r = (mapR - R - time) / 2; r
- * < (mapR + R + time) / 2; r++) { for (int c = (mapC - C - time) / 2; c < (mapC
- * + C + time) / 2; c++) { if (cellMap[r][c] >= 0 && cellMap[r][c] < 10)
- * System.out.print(" "); System.out.print(cellMap[r][c] + " "); }
- * System.out.println(); } System.out.println();
- * 
- * 
- * }
- * 
- * 
- */
