@@ -57,19 +57,17 @@ public class 산악구조로봇 {
 				int ni = cur[0] + di[i];
 				int nj = cur[1] + dj[i];
 
-				if (ni >= 0 && ni < N && nj >= 0 && nj < N) {
-					if (!v[ni][nj]) {
-						if (maps[ni][nj] < maps[cur[0]][cur[1]]) { // 이동할 곳의 높이가 더 낮다면
-							minDis[ni][nj] = Math.min(minDis[ni][nj], cur[2]);
-							pq.offer(new int[] { ni, nj, minDis[ni][nj] });
-						} else if (maps[ni][nj] == maps[cur[0]][cur[1]]) { // 이동할 곳의 높이가 같다면
-							minDis[ni][nj] = Math.min(minDis[ni][nj], cur[2] + 1);
-							pq.offer(new int[] { ni, nj, minDis[ni][nj] });
-						} else if (maps[ni][nj] > maps[cur[0]][cur[1]]) {
-							minDis[ni][nj] = Math.min(minDis[ni][nj], cur[2] + 2*(maps[ni][nj] - maps[cur[0]][cur[1]]));
-							pq.offer(new int[] {ni, nj, minDis[ni][nj]});
-						}
-					}
+				if (ni >= 0 && ni < N && nj >= 0 && nj < N && !v[ni][nj]) {
+					if (maps[ni][nj] < maps[cur[0]][cur[1]]) { // 이동할 곳의 높이가 더 낮다면
+						minDis[ni][nj] = Math.min(minDis[ni][nj], cur[2]);
+						pq.offer(new int[] { ni, nj, minDis[ni][nj] });
+					} else if (maps[ni][nj] == maps[cur[0]][cur[1]]) { // 이동할 곳의 높이가 같다면
+						minDis[ni][nj] = Math.min(minDis[ni][nj], cur[2] + 1);
+						pq.offer(new int[] { ni, nj, minDis[ni][nj] });
+					} else if (maps[ni][nj] > maps[cur[0]][cur[1]]) {
+						minDis[ni][nj] = Math.min(minDis[ni][nj], cur[2] + 2*(maps[ni][nj] - maps[cur[0]][cur[1]]));
+						pq.offer(new int[] {ni, nj, minDis[ni][nj]});
+					}	
 				}
 			}
 		}
