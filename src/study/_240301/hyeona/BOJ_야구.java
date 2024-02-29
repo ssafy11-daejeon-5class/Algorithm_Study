@@ -219,8 +219,6 @@ public class BOJ_야구 {
 		
 		// 3루타
 		// 베이스가 비어있을 때 : 3루
-	
-
 		if((base1 && !base2 && !base3) || (!base1 && base2 && !base3) || (!base1 && !base2 && base3)) // 1루에만 사람이 있을 때 : 다 비우기 + 1득점
 		{
 			score++;
