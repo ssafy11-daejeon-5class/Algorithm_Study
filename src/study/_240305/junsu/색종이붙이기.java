@@ -7,6 +7,7 @@ import java.util.StringTokenizer;
 
 public class 색종이붙이기 {
     static int[][] maps = new int[10][10];
+    static int[] papers = {5,5,5,5,5};
     static int answer;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,7 +20,6 @@ public class 색종이붙이기 {
                 maps[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        int[] papers = {5, 5, 5, 5, 5};
         recursive(0,0,0);
     }
     private static void recursive(int i, int j, int k) {
