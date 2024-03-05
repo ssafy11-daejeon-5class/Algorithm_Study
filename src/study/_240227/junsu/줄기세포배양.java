@@ -34,14 +34,14 @@ public class 줄기세포배양 {
 			K = Integer.parseInt(st.nextToken());
 			
 			maps = new Cell[N][M];
-			Queue<Cell> 
+//			Queue<Cell> 
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < M; j++) {
 					maps[i][j] = new Cell(Integer.parseInt(st.nextToken()), 0, i, j);
 				}
 			}
-			bfs();
+//			bfs();
 			System.out.println("#" + t + " " + answer);
 		}
 	}
