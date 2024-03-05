@@ -21,26 +21,33 @@ public class 혁셈블리어 {
 		T = Integer.parseInt(br.readLine());
 		for (int t = 1; t <= T; t++) {
 			getInput();
-			goGo();
-			
+			while(true) {
+				if(executeAndFindStop()) {
+					sb.append("#" + t + " YES\n");
+					break;
+				}
+				move();
+				if(findInfiniteLoop()) {
+					sb.append("#" + t + " NO\n");
+					break;
+				}
+			}
 		}
 		System.out.println(sb);
 	}
 
-	private static boolean goGo() {
-		while(true) {
-			if(execute()) 
-				return true;
-			move();
-			if(findInfiniteLoop()) {
-				return true;
-			}
-		}
-		
-		return false
-	}
+//	private static boolean goGo() {
+//		while(true) {
+//			if(executeAndCheckStop()) 
+//				return false;
+//			move();
+//			if(findInfiniteLoop()) {
+//				return true;
+//			}
+//		}
+//	}
 	
-	private static boolean execute() {
+	private static boolean executeAndFindStop() {
 		char order = orders[nr][nc];
 		switch (order) {
 		case '<': {
@@ -60,7 +67,7 @@ public class 혁셈블리어 {
 			break;
 		}
 		case '_': {
-			direction = (memory == 0) ? 2 : 0;
+			direction = (memory == 0) ? 0 : 2;
 			break;
 		}
 		case '|': {
@@ -122,7 +129,8 @@ public class 혁셈블리어 {
 		if(visited[nr][nc][direction][memory] == true) {
 			return true;
 		}
-		return visited[nr][nc][direction][memory] = false;
+		visited[nr][nc][direction][memory] = true;
+		return false;
 	}
 	
 	private static void getInput() throws Exception {
