@@ -7,13 +7,13 @@ import java.util.StringTokenizer;
 
 public class 색종이붙이기 {
 	static int[][] maps = new int[10][10];
-	static int[] papers = { 5, 5, 5, 5, 5 };
+	static int[] papers = {0, 5, 5, 5, 5, 5 };
 	static int answer;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = null;
-		answer = 25;
+		answer = Integer.MAX_VALUE;
 
 		for (int i = 0; i < 10; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -22,39 +22,48 @@ public class 색종이붙이기 {
 			}
 		}
 		recursive(0, 0, 0);
-		System.out.println(answer);
+		System.out.println(answer==Integer.MAX_VALUE?-1:answer);
 	}
 
 	private static void recursive(int r, int c, int count) {
-		if (r == 10) {
+		if (r >= 9 && c > 9) {
 			answer = Math.min(answer, count);
 			return;
-		}
+        }
+        if(answer <= count){
+            return;
+        }
+        if(c > 9){
+            recursive(r+1, 0, count);
+            return;
+        }
 
-		for (int i = r; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				if (maps[i][j] == 1) {
-					for (int k = 4; k >= 0; k--) {
-						if (papers[k] > 0 && i + k + 1 < 10 && j + k + 1 < 10 && valid(i, j, k + 1)) {
-							check(i, j, k + 1, 0);
-							papers[k]--;
-							recursive(i, j, count + 1);
-							check(i, j, k + 1, 1);
-							papers[k]++;
-						}
-					}
-				}
-			}
-		}
+        if(maps[r][c] == 1){
+            for (int i = 5; i >= 1; i--) {
+                if(papers[i] > 0 && valid(r, c, i)){
+                    check(r, c, i, 0);
+                    papers[i]--;
+                    recursive(r, c+i, count+1);
+                    papers[i]++;
+                    check(r, c, i, 1);
+                }
+            }
+        } else {
+            recursive(r, c+1, count);
+        }
 
 	}
 
 	private static boolean valid(int r, int c, int size) {
 		for (int i = r; i < r + size; i++) {
 			for (int j = c; j < c + size; j++) {
-				if (maps[i][j] == 0) {
-					return false;
-				}
+                if(i >= 0 && i < 10 && j >= 0 && j < 10 ){
+                    if(maps[i][j] == 0){
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
 			}
 		}
 		return true;
@@ -63,20 +72,11 @@ public class 색종이붙이기 {
 	private static void check(int r, int c, int size, int tag) {
 		for (int i = r; i < r + size; i++) {
 			for (int j = c; j < c + size; j++) {
-				maps[i][j] = tag;
+                if(i>=0 && i < 10 && j >= 0 && j < 10){
+                    maps[i][j] = tag;
+                }
 			}
 		}
 		return;
-	}
-
-	private static boolean onlyZero() {
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				if (maps[i][j] == 1) {
-					return false;
-				}
-			}
-		}
-		return true;
 	}
 }
