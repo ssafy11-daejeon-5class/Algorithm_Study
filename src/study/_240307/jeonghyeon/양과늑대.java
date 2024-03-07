@@ -4,113 +4,131 @@ import java.util.*;
 import java.io.*;
 
 public class 양과늑대 {
-	public int solution(int[][] board, int[][] skill) {
+	import java.util.*;
+
+class Solution {
+    Animal[] animals;
+    boolean[] visited;
+    int totalSheepCnt, totalWolfCnt;
+    int nowMaxBenefitCnt;
+    int nowMaxBenefitIdx;
+    public int solution(int[] info, int[][] edges) {
         int answer = 0;
-        int R = board.length;
-        int C = board[0].length;
-        
-        List<Integer>[][] arrStart = new List[R][C];
-        List<Integer>[][] arrEnd = new List[R][C];
-        int[][] arrAnswer = new int[R][C];
-        for(int i = 0; i < R; i++){
-            for(int j = 0; j < C; j++){
-                arrStart[i][j] = new ArrayList<Integer>();
-                arrEnd[i][j] = new ArrayList<Integer>();
-                arrAnswer[i][j] = 0;
-            }
+        animals = new Animal[info.length];
+        visited = new boolean[info.length];
+        for(int i = 0; i < animals.length; i++){
+            animals[i] = new Animal(info[i], i);
         }
-        
-        for(int i = 0; i < skill.length; i++){
-            if(skill[i][0] == 1) {
-                arrStart[skill[i][1]][skill[i][2]].add(skill[i][5] * skill[i][0] * (-1));
-                arrEnd[skill[i][3]][skill[i][4]].add(skill[i][5] * skill[i][0] * (-1));
-            }
-            else if(skill[i][0] == 2){
-                arrStart[skill[i][1]][skill[i][2]].add(skill[i][5] * skill[i][0]);
-                arrEnd[skill[i][3]][skill[i][4]].add(skill[i][5] * skill[i][0]);
-            }
-        }
-        
-        for(int i = 0; i < R; i++){
-            for(int j = 0; j < C; j++){
-                System.out.print("[");
-                for(int k = 0; k < arrStart[i][j].size(); k++){
-                    System.out.print(arrStart[i][j].get(k)+ " ");
-                }
-                System.out.print("] ");
-            }
-            System.out.println();
-        }
-        System.out.println("여기까지 plus");
-        
-        for(int i = 0; i < R; i++){
-            for(int j = 0; j < C; j++){
-                System.out.print("[");
-                for(int k = 0; k < arrEnd[i][j].size(); k++){
-                    System.out.print(arrEnd[i][j].get(k)+ " ");
-                }
-                System.out.print("] ");
-            }
-            System.out.println();
-        }
-        System.out.println("여기까지 minus");
-        
-        
-        for(int i = 0; i < arrStart[0][0].size(); i++){
-            arrAnswer[0][0] = arrStart[0][0].get(i);
-        }
-        for(int i = 1; i < R; i++){
-            arrAnswer[i][0] = arrAnswer[i-1][0];
-            for(int j = 0; j < arrStart[i][0].size(); j++){
-                arrAnswer[i][0] += arrStart[i][0].get(j);
-            }
-            for(int j = 0; j < arrEnd[i-1][0].size(); j++){
-                arrAnswer[i][0] -= arrEnd[i-1][0].get(j);
-            }
-        }
-        for(int i = 1; i < C; i++){
-            arrAnswer[0][i] = arrAnswer[0][i-1];
-            for(int j = 0; j < arrStart[0][i].size(); j++){
-                arrAnswer[0][i] += arrStart[0][i].get(j);
-            }
-            for(int j = 0; j < arrEnd[0][i-1].size(); j++){
-                arrAnswer[0][i] -= arrEnd[0][i-1].get(j);
-            }
+        for(int i = 0; i < edges.length; i++){
+            animals[edges[i][0]].children.add(animals[edges[i][1]]);
+            animals[edges[i][1]].parent = animals[edges[i][0]];
         }
         
         
-        for(int i = 0; i < R; i++){
-            for(int j = 0; j < C; j++){
-                System.out.print(arrAnswer[i][j]+ " ");
+        totalSheepCnt += getRootSheeps(0);
+        totalWolfCnt = 0;
+        while(true){
+            nowMaxBenefitCnt = Integer.MIN_VALUE;
+            nowMaxBenefitIdx = -1;
+            countAnimals(0);
+            if(nowMaxBenefitIdx == -1){
+                break;
             }
-            System.out.println();
-        }
-        System.out.println();
-        
-        for(int i = 1; i < R; i++){
-            for(int j = 1; j < C; j++){
-                arrAnswer[i][j] = arrAnswer[i-1][0] + arrAnswer[i][j-1] - arrAnswer[i-1][j-1];
-                for(int k = 0; k < arrStart[i][j].size(); k++){
-                    arrAnswer[i][j] += arrStart[i][j].get(k);
-                }
-                for(int k = 0; k < arrEnd[i-1][j].size(); k++){
-                    arrAnswer[i][j] -= arrEnd[i-1][j].get(k);
-                }
-                for(int k = 0; k < arrEnd[i][j-1].size(); k++){
-                    arrAnswer[i][j] -= arrEnd[i][j-1].get(k);
-                }
-            }
+            getAnimals(nowMaxBenefitIdx);
+            
+            System.out.println(nowMaxBenefitIdx + " " + nowMaxBenefitCnt + " " + totalSheepCnt + " " + totalWolfCnt);
         }
         
-        for(int i = 0; i < R; i++){
-            for(int j = 0; j < C; j++){
-                System.out.print(arrAnswer[i][j]+ " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-        
+            
+        answer = totalSheepCnt;
         return answer;
+    }
+    
+    public void getAnimals(int idx){
+        if(visited[idx]) 
+            return;
+        
+        visited[idx] = true;
+        if(animals[idx].type == 0) {
+            totalSheepCnt++;
+        }
+        else if(animals[idx].type == 1) {
+            totalWolfCnt++;
+        }
+        
+        getAnimals(animals[idx].parent.idx);
+    }
+    
+    public void countAnimals(int idx){
+        if(idx == 0){
+            animals[idx].sheepCnt = 0;
+            animals[idx].wolfCnt = 0;
+        }
+        else{
+            animals[idx].sheepCnt = animals[idx].parent.sheepCnt;
+            animals[idx].wolfCnt = animals[idx].parent.wolfCnt;
+            if(!visited[idx]){
+                if(animals[idx].type == 0) {
+                    animals[idx].sheepCnt++;
+                }
+                else if(animals[idx].type == 1) {
+                    animals[idx].wolfCnt++;
+                }
+                if(totalSheepCnt - totalWolfCnt <= animals[idx].wolfCnt - animals[idx].sheepCnt){
+                // animals[idx].sheepCnt = -1;
+                return;
+            }
+            
+            if(animals[idx].sheepCnt - animals[idx].wolfCnt > nowMaxBenefitCnt 
+               || (animals[idx].sheepCnt - animals[idx].wolfCnt == nowMaxBenefitCnt && animals[idx].sheepCnt > animals[nowMaxBenefitIdx].sheepCnt)){
+                nowMaxBenefitCnt = animals[idx].sheepCnt - animals[idx].wolfCnt;
+                nowMaxBenefitIdx = idx;
+            }
+            }
+            
+            
+        }
+        
+        for(int i = 0; i < animals[idx].children.size(); i++){
+            countAnimals(animals[idx].children.get(i).idx);
+        }
+        
+        
+        
+        
         
     }
+
+    // 새로운 방법
+    // 먹을 수 있는 양을 다 먹음
+    // 늑대를 먹고 먹어도 이득인 양들까지 다 먹음
+    // 이제 안가본 모든 노드들을 이득/손해 계산
+    // 
+    
+    public int getRootSheeps(int idx){
+        int cnt = 0;
+        if(animals[idx].type == 0 && !visited[idx]) {
+            cnt++;
+            visited[idx] = true;
+            for(int i = 0; i < animals[idx].children.size(); i++){
+                if(animals[idx].children.get(i).type == 0)
+                    cnt += getRootSheeps(animals[idx].children.get(i).idx);
+            }
+        }
+        return cnt;
+    }
+    
+    static class Animal{
+        public int type, idx;
+        public int sheepCnt, wolfCnt;
+        Animal parent;
+        List<Animal> children;
+        
+        public Animal(int type, int idx){
+            this.type = type;
+            this.idx = idx;
+            children = new ArrayList<>();
+        }
+    }
+}
 }
