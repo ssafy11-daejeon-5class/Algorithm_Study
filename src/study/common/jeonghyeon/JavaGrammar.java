@@ -1,12 +1,19 @@
-package algorithm.Algorithm_Study.src.study.common.jeonghyeon;
+package study.common.jeonghyeon;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class JavaGrammar {
 
@@ -17,7 +24,7 @@ public class JavaGrammar {
 		System.out.println();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		String my_str = "abcdef"; // java는 변수 앞에 형 선언
 
@@ -112,8 +119,9 @@ public class JavaGrammar {
 		
 		
 		
-		
+
 		List<String> list = new ArrayList<>();
+		List<String> list2 = new ArrayList<>();
 
 		list.add("서울"); //리스트 가장 뒤에 서울 삽입
 		list.add(1, "대전"); // 인덱스 1의 위치에 대전 삽입
@@ -137,13 +145,13 @@ public class JavaGrammar {
 		list.contains("서울"); // 서울이 list에 존재하면 true, 아니면 false 
 		list.containsAll(list2); // list에 list2의 모든 값이 포함되면 true
 
-		list.removeIf(k -> k%2 !=0) // 람다식으로 홀수를 list 에서 제거 
+		list.removeIf(k -> k != "i"); // 람다식으로 홀수를 list 에서 제거 
 		
 		
 		
 		
 		/*선언*/
-		ArrayList<자료형> 변수명 = new ArrayList<자료형>(크기);
+		ArrayList<Integer> integer1 = new ArrayList<>();
 		//new ArrayList 쪽 자료형, 크기 전부 생략 가능
 		//ex(1): ArrayList<Integer> integer1 = new ArrayList<Integer>();
 		//ex(2): ArrayList<Integer> integer1 = new ArrayList<>();
@@ -154,9 +162,8 @@ public class JavaGrammar {
 		/*제거*/
 		integer1.remove(0); //element 직접 입력 혹은 인덱스 입력 가능
 		/*대체*/
-		integer1.set(1, 'mon');
+		integer1.set(1, 2);
 		/*정렬*/
-		import java.util.Collections;
 
 		Collections.sort(integer1); // 오름차순 정렬
 
@@ -166,20 +173,20 @@ public class JavaGrammar {
 		
 		
 		/* 문자열 배열 -> List */
-		String[] tmp = "abcde";
-		List<String> list = new ArrayList<>(Arrays.asList(tmp));
+		String[] tmp = {};
+		List<String> list1 = new ArrayList<>(Arrays.asList(tmp));
 
 		/* List -> 문자열 배열 */
-		List<String> list = new ArrayList<>();
-		String[] tmp = list.toArray(new String[list.size()]));
+		list1 = new ArrayList<>();
+		tmp = list.toArray(new String[list.size()]);
 
 		/* 정수 배열 -> List */
-		int[] tmp = {123, 1222, 563, 7531};
-		List<Integer> list = new ArrayList<>(Arrays.asList(tmp));
+		int[] tmp2 = {123, 1222, 563, 7531};
+		List<Integer> list3 = new ArrayList<>();
 
 		/* List -> 정수 배열 */
-		List<Integer> list = new ArrayList<>();
-		int[] tmp = list.stream().mapToInt(i->i).toArray(); 
+		list3 = new ArrayList<>();
+		tmp2 = list3.stream().mapToInt(i->i).toArray(); 
 		
 		
 		// String 배열/리스트 -> Int 변환
@@ -196,8 +203,8 @@ public class JavaGrammar {
 
 		/*HashMap 선언*/
 		HashMap<Integer, Integer> map1 = new HashMap<Integer, Integer>(); // key와 value가 전부 integer 
-		HashMap<Integer, Integer> map1 = new HashMap<>(); //new에서 타입 파라미터 생략 가능
-		HashMap<Integer, Integer> map1 = new HashMap<>(10); // 초기 크기 설정 가능 
+		map1 = new HashMap<>(); //new에서 타입 파라미터 생략 가능
+		map1 = new HashMap<>(10); // 초기 크기 설정 가능 
 		HashMap<String, String> map2 = new HashMap<>(){{
 			put("key1", "value1");
 		    put("key2", "value2");
@@ -206,10 +213,10 @@ public class JavaGrammar {
 		/*값 추가*/
 		HashMap<Integer, String> num_map = new HashMap<Integer, String>();
 		num_map.put(1, "one");
-		num_map.put(2, "two);
+		num_map.put(2, "two");
 		
 		/*값 삭제*/
-		HashMap<Integer, String> num_map = new HashMap<Integer, String>(){{
+		num_map = new HashMap<Integer, String>(){{
 			put(1,"One");
 		    put(2,"Two");
 		    }};
@@ -217,7 +224,7 @@ public class JavaGrammar {
 		num_map.clear(); 
 		
 		/*값 출력*/
-		HashMap<Integer, String> num_map = new HashMap<Integer, String>(){{
+		num_map = new HashMap<Integer, String>(){{
 			put(1,"One");
 		    put(2,"Two");
 		    }};
@@ -267,12 +274,12 @@ public class JavaGrammar {
 		
 		/*priority queue 선언*/
 		PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(); //int형 priorityQueue 선언 (우선순위가 낮은 숫자 순)
-		PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Collections.reverseOrder()); //int형 priorityQueue 선언 (우선순위가 높은 숫자 순)
+		priorityQueue = new PriorityQueue<>(Collections.reverseOrder()); //int형 priorityQueue 선언 (우선순위가 높은 숫자 순)
 
 		/*priority queue 값 추가 및 제거 */
 		priorityQueue.add(3);
 		priorityQueue.offer(2);
-		---
+
 		priorityQueue.poll();
 		priorityQueue.remove();
 
