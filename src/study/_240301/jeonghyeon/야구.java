@@ -8,20 +8,20 @@ import java.util.StringTokenizer;
 public class 야구 {
 	static int N;
 	static int[] players;
-	static int[] nowInning;
-	static int nowBatter = -1;
-	static int inningAnswer = 0;
-	static int totalAnswer = 0;
+	static int[][] innings;
+	static int prevInningBatter = -1;
+	static int lastBatter;
+	static int inningAnswer;
+	static int totalAnswer;
 
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	
 	public static void main(String[] args) throws Exception {
 
-		N = Integer.parseInt(br.readLine());
+		getInput();
 		for(int i = 0; i < N; i++) {
-			getInput();
-			combination(0);
+			combination(0);		
 			totalAnswer += inningAnswer;
 		}
 		System.out.println(totalAnswer);
@@ -61,6 +61,7 @@ public class 야구 {
 		int[] ru = new int[5]; // 타석, 1~3루, 도착홈
 		Arrays.fill(ru, 0);
 		ru[0] = 1;
+		int nowBatter = prevInningBatter;
 		
 		while(outCnt < 3) {
 			nowBatter = (nowBatter+1) % 9;
@@ -76,11 +77,16 @@ public class 야구 {
 		}
 		
 		inningAnswer = Math.max(inningAnswer, ru[4]);
+		if(ru[4] > inningAnswer) {
+			lastBatter = nowBatter;
+			inningAnswer = ru[]
+		}
 	}
 
 	private static void getInput() throws Exception {		
+		N = Integer.parseInt(br.readLine());
 		players = new int[5];		
-		nowInning = new int[9];
+		innings = new int[9];
 		Arrays.fill(nowInning, -1);
 		st = new StringTokenizer(br.readLine());
 		for (int j = 0; j < 9; j++) {
@@ -92,6 +98,7 @@ public class 야구 {
 			}
 		}
 		
+//		nowBatter = -1;
 		inningAnswer = 0;
 		
 

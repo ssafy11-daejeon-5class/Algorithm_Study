@@ -159,6 +159,8 @@ public class JavaGrammar {
 
 		/*추가*/
 		integer1.add(6);
+		integer1.add(2);
+		integer1.add(2);
 		/*제거*/
 		integer1.remove(0); //element 직접 입력 혹은 인덱스 입력 가능
 		/*대체*/
