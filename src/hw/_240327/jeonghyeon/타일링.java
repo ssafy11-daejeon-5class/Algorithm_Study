@@ -13,7 +13,7 @@ public class 타일링 {
 		dp[1] = 1;
 		dp[2] = 2;
 		
-		System.out.println(dp(N) % 10007);
+		System.out.println(dp(N));
 	}
 
 	static int dp(int N) {
@@ -21,7 +21,7 @@ public class 타일링 {
 		if (dp[N] != 0) {
 			return dp[N];
 		}
-		return dp[N] = dp(N-1) + dp(N-2);
+		return dp[N] = (dp(N-1) + dp(N-2)) % 10007;
 	}
 
 }
